@@ -5,6 +5,7 @@ import AppLayout from "./ shared/AppLayout";
 import Login from "./components/HomePage/Login";
 import { Spaces } from "./components/Spaces/Spaces";
 import { SpaceDetailPage } from "./components/SpaceDetail/SpaceDetailPage";
+import { VideoChat } from "./components/Video/VideoChat";
 
 function App() {
   return (
@@ -14,6 +15,9 @@ function App() {
         <Route path="/all_spaces" element={<Spaces />}></Route>
         <Route path="/space/:space_id" element={<SpaceDetailPage/>}></Route>
       </Routes>
+
+      <VideoChat/>
+      
     </AppLayout>
   );
 }

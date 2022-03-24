@@ -1,0 +1,28 @@
+.card-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-details {
+    text-align: left;
+}
+
+.spaces-list-wrapper {
+    margin: 5%;
+}
+
+.card-button {
+    height: 40px;
+    background-color: #00577d!important;
+    border: none;
+}
+
+.card-container:hover {
+    transform: scale(1.05);
+}
+.nav-link {
+    text-decoration: none;
+    color: black!important;
+}

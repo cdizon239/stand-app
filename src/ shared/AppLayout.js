@@ -1,10 +1,13 @@
 import React from "react";
 import { NavBar } from "./NavBar";
+import { useLocation } from "react-router-dom";
 
 const AppLayout = (props) => {
+  const location = useLocation()
+
   return (
     <div className="App">
-      <NavBar />
+      { location.pathname !== '/' && <NavBar />}
       {props.children}
     </div>
   );

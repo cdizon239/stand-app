@@ -1,9 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SpacesList } from "./SpacesList";
+import "./Spaces.css";
+import styled from 'styled-components';
+
+const StyledButton = styled.button`
+  border-radius: 25px;
+  border: none;
+  background: rgba(69,61,121,1);
+  min-height: 50px;
+  color: white;
+  font-weight: 500;
+  padding: 0 2%;
+`
 
 export const Spaces = () => {
   const [spaces, setSpaces] = useState();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const getSpaces = async () => {
     let allSpaces = await fetch(
@@ -17,7 +30,7 @@ export const Spaces = () => {
       }
     );
     let jsonAllSpaces = await allSpaces.json();
-    if (jsonAllSpaces.status === 302) navigate("/");
+    if (jsonAllSpaces.status === 302) navigate("/login");
     if (jsonAllSpaces) {
       setSpaces(jsonAllSpaces.data);
       console.log(jsonAllSpaces);
@@ -25,14 +38,16 @@ export const Spaces = () => {
   };
 
   useEffect(() => {
-      getSpaces()
-  }, [])  
+    getSpaces();
+  }, []);
 
   return (
-      <>
-      {spaces && spaces?.map(space => {
-       return <h3>{space.name}</h3>}
-    )}
-      </>
-  )
+    <>
+      <div className=""><h1>Spaces</h1></div>
+      <div className="spaces-list-wrapper">
+        {spaces && <SpacesList spaces={spaces} />}
+      </div>
+      <StyledButton>Create a Space</StyledButton>
+    </>
+  );
 };

@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-export const Participant = ({participant}) => {
+export const Participant = ({ participant }) => {
   const [videoTracks, setVideoTracks] = useState([]);
   const [audioTracks, setAudioTracks] = useState([]);
+
   const videoRef = useRef();
   const audioRef = useRef();
 
@@ -12,10 +13,13 @@ export const Participant = ({participant}) => {
       .filter((track) => track !== null);
 
   useEffect(() => {
+    setVideoTracks(trackpubsToTracks(participant.videoTracks));
+    setAudioTracks(trackpubsToTracks(participant.audioTracks));
+
     const trackSubscribed = (track) => {
       if (track.kind === "video") {
         setVideoTracks((videoTracks) => [...videoTracks, track]);
-      } else {
+      } else if (track.kind === "audio") {
         setAudioTracks((audioTracks) => [...audioTracks, track]);
       }
     };
@@ -23,13 +27,10 @@ export const Participant = ({participant}) => {
     const trackUnsubscribed = (track) => {
       if (track.kind === "video") {
         setVideoTracks((videoTracks) => videoTracks.filter((v) => v !== track));
-      } else {
+      } else if (track.kind === "audio") {
         setAudioTracks((audioTracks) => audioTracks.filter((a) => a !== track));
       }
     };
-
-    setVideoTracks(trackpubsToTracks(participant.videoTracks));
-    setAudioTracks(trackpubsToTracks(participant.audioTracks));
 
     participant.on("trackSubscribed", trackSubscribed);
     participant.on("trackUnsubscribed", trackUnsubscribed);
@@ -69,3 +70,4 @@ export const Participant = ({participant}) => {
     </div>
   );
 };
+

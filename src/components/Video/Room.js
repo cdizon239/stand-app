@@ -1,68 +1,32 @@
-import React, { useState, useEffect } from "react";
-import Video from "twilio-video";
-import { Participant } from "./Participant";
+import React, { useEffect, useState } from "react";
+import {Participant} from "./Participant";
 
-export const Room = ({ roomName, token, handleLogout }) => {
-  const [room, setRoom] = useState(null);
+export const Room = ({ roomName, room, handleLogout }) => {
   const [participants, setParticipants] = useState([]);
 
-  const remoteParticipants = participants.map((participant) => {
-    <p key={participant.sid}>{participant.identity}</p>;
-    return (
-      <div className="room">
-        <h2>Room: {roomName}</h2>
-        <button onClick={handleLogout}>Log out</button>
-        <div className="local-participant">
-          {room ? (
-            <Participant
-              key={room.localParticipant.sid}
-              participant={room.localParticipant}
-            />
-          ) : (
-            ""
-          )}
-        </div>
-        <h3>Remote Participants</h3>
-        <div className="remote-participants">{remoteParticipants}</div>
-      </div>
-    );
-  });
-
-  //    comments here
   useEffect(() => {
     const participantConnected = (participant) => {
       setParticipants((prevParticipants) => [...prevParticipants, participant]);
     };
+
     const participantDisconnected = (participant) => {
       setParticipants((prevParticipants) =>
         prevParticipants.filter((p) => p !== participant)
       );
     };
-    Video.connect(token, {
-      name: roomName,
-    }).then((room) => {
-      setRoom(room);
-      room.on("participantConnected", participantConnected);
-      room.on("participantDisconnected", participantDisconnected);
-      room.participants.forEach(participantConnected);
-    });
 
+    room.on("participantConnected", participantConnected);
+    room.on("participantDisconnected", participantDisconnected);
+    room.participants.forEach(participantConnected);
     return () => {
-      setRoom((currentRoom) => {
-        if (currentRoom && currentRoom.localParticipant.state === "connected") {
-          currentRoom.localParticipant.tracks.forEach(function (
-            trackPublication
-          ) {
-            trackPublication.track.stop();
-          });
-          currentRoom.disconnect();
-          return null;
-        } else {
-          return currentRoom;
-        }
-      });
+      room.off("participantConnected", participantConnected);
+      room.off("participantDisconnected", participantDisconnected);
     };
-  }, [[roomName, token]]);
+  }, [room]);
+
+  const remoteParticipants = participants.map((participant) => (
+    <Participant key={participant.sid} participant={participant} />
+  ));
 
   return (
     <div className="room">
@@ -70,9 +34,10 @@ export const Room = ({ roomName, token, handleLogout }) => {
       <button onClick={handleLogout}>Log out</button>
       <div className="local-participant">
         {room ? (
-          <p key={room.localParticipant.sid}>
-            {room.localParticipant.identity}
-          </p>
+          <Participant
+            key={room.localParticipant.sid}
+            participant={room.localParticipant}
+          />
         ) : (
           ""
         )}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from 'styled-components';
+import SpaceDetailHeader from "./SpaceDetailHeader";
 
 const StyledButton = styled.button`
   border-radius: 25px;
@@ -30,7 +31,7 @@ export const SpaceDetailPage = () => {
     let jsonSpace = await spaceToFetch.json();
 
     if (jsonSpace) {
-      console.log(jsonSpace);
+      console.log(jsonSpace.data.members[0].user);
       setSpace(jsonSpace.data);
     }
   };
@@ -42,7 +43,7 @@ export const SpaceDetailPage = () => {
   return (
     <>
       {space && <div>
-        <h1>{space.name}</h1>
+        <SpaceDetailHeader space={space} />
       </div>}
     </>
   );

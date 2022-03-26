@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
 import { useNavigate } from "react-router-dom";
 
@@ -20,9 +20,23 @@ const Login = () => {
         }),
         credentials: 'include'
     })
-    console.log(await login.json());
+
+    let loggedInUser = await login.json()
+    if (loggedInUser.status === 200) {
+      localStorage.setItem("loggedInUserName", loggedInUser.data.name)
+      localStorage.setItem("loggedInUserEmail", loggedInUser.data.email)
+      localStorage.setItem("loggedInUserAvatar", loggedInUser.data.img_url)
+      localStorage.setItem("loggedInUserGID", loggedInUser.data.googleId)
+    }
+
     navigate("/all_spaces");
   };
+
+  //  clear local storage on mount
+  useEffect(() => {
+    localStorage.clear()
+  }, [])
+
   return (
     <div>
       <div className="LoginWrapper">

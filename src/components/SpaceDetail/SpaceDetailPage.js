@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import SpaceDetailHeader from "./SpaceDetailHeader";
 import SpaceBoard from "./SpaceBoard";
+import { getTickets } from "../../utils/getTickets";
 
 const StyledButton = styled.button`
   border-radius: 25px;
@@ -17,6 +18,7 @@ const StyledButton = styled.button`
 
 export const SpaceDetailPage = () => {
   const params = useParams();
+  const [tickets, setTickets] = useState();
   const [space, setSpace] = useState();
 
   const getSpace = async () => {
@@ -40,14 +42,20 @@ export const SpaceDetailPage = () => {
 
   useEffect(() => {
     getSpace();
+    // space && getTickets(setTickets, space.id)
+
   }, []);
+
+  useEffect(() => {
+    space && getTickets(setTickets, space.id)
+  }, [space])
 
   return (
     <>
       {space && (
         <div>
           <SpaceDetailHeader space={space} />
-          <SpaceBoard space={space} />
+          { tickets && <SpaceBoard space={space} tickets={tickets} />}
         </div>
       )}
     </>

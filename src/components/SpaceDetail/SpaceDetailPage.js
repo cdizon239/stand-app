@@ -15,7 +15,6 @@ const StyledButton = styled.button`
   padding: 0 2%;
 `;
 
-
 export const SpaceDetailPage = () => {
   const params = useParams();
   const [tickets, setTickets] = useState();
@@ -42,8 +41,6 @@ export const SpaceDetailPage = () => {
 
   useEffect(() => {
     getSpace();
-    // space && getTickets(setTickets, space.id)
-
   }, []);
 
   useEffect(() => {

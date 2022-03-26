@@ -1,7 +1,9 @@
 import React from 'react'
+import { editTicketStatus } from './editTicketStatus';
 
 const onDragEnd = (result, columns, setColumns) => {
     //  is dropping to same column, do nothing
+    console.log(result);
     if (!result.destination) return;
     const { source, destination } = result;
     //  if we're changing to a differnet column
@@ -12,6 +14,9 @@ const onDragEnd = (result, columns, setColumns) => {
       const destItems = [...destColumn.items];
       const [removed] = sourceItems.splice(source.index,1)
       destItems.splice(destination.index, 0, removed)
+
+      editTicketStatus(result.draggableId, result.destination.droppableId)
+
       setColumns({
         ...columns,
         [source.droppableId]: {

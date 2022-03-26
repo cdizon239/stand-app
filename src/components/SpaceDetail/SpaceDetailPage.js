@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import styled from 'styled-components';
+import styled from "styled-components";
 import SpaceDetailHeader from "./SpaceDetailHeader";
+import SpaceBoard from "./SpaceBoard";
 
 const StyledButton = styled.button`
   border-radius: 25px;
   border: none;
-  background: rgba(69,61,121,1);
+  background: rgba(69, 61, 121, 1);
   min-height: 50px;
   color: white;
   font-weight: 500;
   padding: 0 2%;
-`
+`;
+
 
 export const SpaceDetailPage = () => {
   const params = useParams();
@@ -42,9 +44,12 @@ export const SpaceDetailPage = () => {
 
   return (
     <>
-      {space && <div>
-        <SpaceDetailHeader space={space} />
-      </div>}
+      {space && (
+        <div>
+          <SpaceDetailHeader space={space} />
+          <SpaceBoard space={space} />
+        </div>
+      )}
     </>
   );
 };

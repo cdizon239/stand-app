@@ -1,24 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { v4 as uuid } from "uuid";
+import { getTickets } from "../../utils/getTickets";
+import { useParams } from "react-router-dom";
 
-const itemsFromBackend = [
-  { id: uuid(), content: "First task" },
-  { id: uuid(), content: "Second task" },
-];
-
-const columnsData = {
-  [uuid()]: {
-    name: "Todo",
-    items: itemsFromBackend,
-  },
-  [uuid()]: {
-    name: "In Progress",
-    items: [],
-  },
-};
 
 const onDragEnd = (result, columns, setColumns) => {
+  //  is dropping to same column, do nothing
   if (!result.destination) return;
   const { source, destination } = result;
   //  if we're changing to a differnet column
@@ -40,7 +28,6 @@ const onDragEnd = (result, columns, setColumns) => {
         items: destItems
       }
     })
-
   } else {
     //  get our column/s
     const column = columns[source.droppableId];
@@ -60,8 +47,33 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 };
 
-const SpaceBoard = () => {
-  const [columns, setColumns] = useState(columnsData);
+const SpaceBoard = ({space}) => {
+  const params = useParams()
+  const [tickets, setTickets] = useState([])
+  const [columns, setColumns] = useState({});
+
+  useEffect( async () => {
+    await getTickets(setTickets, space.id)
+    setColumns({
+      ...columns,
+      "To do": {
+        items: tickets?.filter(ticket => ticket.status === "To do")
+      },
+      "In Progress": {
+        items: tickets?.filter(ticket => ticket.status === "In Progress")
+      },
+      "Blocked": {
+        items: tickets?.filter(ticket => ticket.status === "Blocked")
+      },
+      "Done": {
+        items: tickets?.filter(ticket => ticket.status === "Done")
+      },
+    })
+  }, [])
+
+  useEffect(() => {
+    console.log(tickets);
+  }, [tickets])
 
   return (
     <>
@@ -83,7 +95,7 @@ const SpaceBoard = () => {
                   margin: "0 5px",
                 }}
               >
-                <h2>{column.name}</h2>
+                <h2>{id}</h2>
                 <Droppable droppableId={id} key={id}>
                   {/*  provided are styles, props, etc */}
                   {(provided, snapshot) => {
@@ -104,7 +116,7 @@ const SpaceBoard = () => {
                           return (
                             <Draggable
                               key={item.id}
-                              draggableId={item.id}
+                              draggableId={`${item.id}`}
                               index={index}
                             >
                               {(provided, snapshot) => {
@@ -125,7 +137,7 @@ const SpaceBoard = () => {
                                       ...provided.draggableProps.style,
                                     }}
                                   >
-                                    {item.content}
+                                    {item.title}
                                   </div>
                                 );
                               }}

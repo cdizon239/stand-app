@@ -20,7 +20,7 @@ export const SpaceDetailPage = () => {
   const params = useParams();
   const [tickets, setTickets] = useState();
   const [space, setSpace] = useState();
-  const [showNewTicketForm, setShowNewTicketForm] = useState()
+  const [showNewTicketForm, setShowNewTicketForm] = useState();
 
   const getSpace = async () => {
     let spaceToFetch = await fetch(
@@ -46,19 +46,29 @@ export const SpaceDetailPage = () => {
   }, []);
 
   useEffect(() => {
-    space && getTickets(setTickets, space.id)
-  }, [space])
+    space && getTickets(setTickets, space.id);
+  }, [space]);
 
   return (
     <>
       {space && (
         <div>
           <SpaceDetailHeader space={space} />
-          { tickets && <SpaceBoard space={space} tickets={tickets} setShowNewTicketForm={setShowNewTicketForm}/>}
-          <NewTicketModal showNewTicketForm={showNewTicketForm} setShowNewTicketForm={setShowNewTicketForm} spaceMembers={
-            space.members.map(member => member.user)
-          }/>
-
+          {tickets && (
+            <SpaceBoard
+              space={space}
+              tickets={tickets}
+              setShowNewTicketForm={setShowNewTicketForm}
+            />
+          )}
+          <NewTicketModal
+            showNewTicketForm={showNewTicketForm}
+            setShowNewTicketForm={setShowNewTicketForm}
+            spaceMembers={space.members.map((member) => member.user)}
+            getTickets={getTickets}
+            setTickets={setTickets}
+            spaceId={space.id}
+          />
         </div>
       )}
     </>

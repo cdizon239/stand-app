@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, FormGroup, Image } from "react-bootstrap";
-import { createSpace } from "../../utils/createSpace";
+import { createTicket } from "../../utils/createTicket";
 import Select from "react-select";
 import styled from "styled-components";
 
@@ -12,14 +12,26 @@ export const NewTicketModal = ({
   showNewTicketForm,
   setShowNewTicketForm,
   spaceMembers,
+  getTickets,
+  setTickets,
+  spaceId
 }) => {
+    const [ticketInfo, setTicketInfo] = useState()
+    
 
   const handleClose = () => setShowNewTicketForm(false);
   
   const handleFormChange = (name, value) => {
+      setTicketInfo({
+          ...ticketInfo,
+          [name] : value
+      })
+
   };
 
   const handleFormSubmit = async () => {
+      await createTicket(spaceId, ticketInfo, getTickets, setTickets)
+      setShowNewTicketForm(false)
   }
 
   const statusOptions = [
@@ -31,7 +43,7 @@ export const NewTicketModal = ({
 
   const membersDropdown = spaceMembers.map((user) => {
     return {
-      value: user.email,
+      value: user.id,
       label: (
         <div>
           <Avatar
@@ -85,16 +97,15 @@ export const NewTicketModal = ({
               <Form.Label>Assignee</Form.Label>
               <Select
                 options={membersDropdown}
-                name="members"
-                // onChange={(target, action) => {
-                //   let memberEmails = target.map(item => item.value)
-                //   handleFormChange(action.name, memberEmails);
-                // }}
+                name="assignee"
+                onChange={(target, action) => {
+                  handleFormChange(action.name, target.value);
+                }}
               />
             </FormGroup>
           </Form>
           <Button variant="primary" onClick={handleFormSubmit}>
-            Create Space
+            Create Ticket
           </Button>
         </Modal.Body>
       </Modal>

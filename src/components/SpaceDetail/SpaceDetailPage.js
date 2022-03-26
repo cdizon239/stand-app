@@ -4,6 +4,7 @@ import styled from "styled-components";
 import SpaceDetailHeader from "./SpaceDetailHeader";
 import SpaceBoard from "./SpaceBoard";
 import { getTickets } from "../../utils/getTickets";
+import { NewTicketModal } from "./NewTicketModal";
 
 const StyledButton = styled.button`
   border-radius: 25px;
@@ -19,6 +20,7 @@ export const SpaceDetailPage = () => {
   const params = useParams();
   const [tickets, setTickets] = useState();
   const [space, setSpace] = useState();
+  const [showNewTicketForm, setShowNewTicketForm] = useState()
 
   const getSpace = async () => {
     let spaceToFetch = await fetch(
@@ -52,7 +54,11 @@ export const SpaceDetailPage = () => {
       {space && (
         <div>
           <SpaceDetailHeader space={space} />
-          { tickets && <SpaceBoard space={space} tickets={tickets} />}
+          { tickets && <SpaceBoard space={space} tickets={tickets} setShowNewTicketForm={setShowNewTicketForm}/>}
+          <NewTicketModal showNewTicketForm={showNewTicketForm} setShowNewTicketForm={setShowNewTicketForm} spaceMembers={
+            space.members.map(member => member.user)
+          }/>
+
         </div>
       )}
     </>

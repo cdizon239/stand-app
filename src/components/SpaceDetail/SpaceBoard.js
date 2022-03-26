@@ -4,24 +4,10 @@ import { getTickets } from "../../utils/getTickets";
 import { useParams } from "react-router-dom";
 import onDragEnd from "../../utils/onDragEnd";
 import styled from "styled-components";
+import { PlusCircleFill } from "react-bootstrap-icons";
+import { ColumnWrapper, DraggableTicket } from "./styles";
 
-
-const ColumnWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 5px;
-`;
-
-const DraggableTicket = styled.div`
-  user-select: none;
-  padding: 16;
-  margin: 0 0 8px 0;
-  min-height: 50px;
-  color: white;
-`;
-
-const SpaceBoard = ({ space, tickets }) => {
+const SpaceBoard = ({ space, tickets, setShowNewTicketForm }) => {
   const [columns, setColumns] = useState({});
 
   //  put tickets on their categories / status on mount
@@ -60,6 +46,7 @@ const SpaceBoard = ({ space, tickets }) => {
               return (
                 <ColumnWrapper key={id}>
                   <h2>{id}</h2>
+                  <PlusCircleFill onClick={() => setShowNewTicketForm(true)}/>
                   <Droppable droppableId={id} key={id}>
                     {/*  provided are styles, props, etc */}
                     {(provided, snapshot) => {

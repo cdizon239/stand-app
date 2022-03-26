@@ -1,21 +1,6 @@
 import React, { useEffect } from "react";
 import AvatarGroup from '@atlaskit/avatar-group';
-import styled from "styled-components";
-
-
-const HeaderWrapper = styled.div`
-display: flex;
-justify-content: space-between;
-padding: 5%;
-`
-const HeaderTitleContainer = styled.div`
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-`
-const MemberContainer = styled.div`
-display: flex;
-`
+import {HeaderWrapper, HeaderTitleContainer} from './styles'
 
 const SpaceDetailHeader = ({ space }) => {
     let members = space.members

@@ -12,7 +12,4 @@ export const editTicketStatus = async (ticketId, ticketStatus) => {
           })
         }
       );
-      // let editedTicket = await editTicket.json();
-  
-      // return editedTicket.data
 }

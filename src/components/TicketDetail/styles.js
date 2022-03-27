@@ -20,5 +20,10 @@ border-radius: 10px;
 
 export const CommentArea = styled.div`
 width: 30%;
-margin: 0 30px;
+margin-left: 30px;
 `
+
+export const WriteCommentBox = styled.div`
+  display: flex;
+  min-width: 100%;
+`;

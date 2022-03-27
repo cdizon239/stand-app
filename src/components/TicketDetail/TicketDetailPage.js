@@ -10,25 +10,25 @@ import {
   TicketDetailPageWrapper,
   TicketArea,
   CommentArea,
+  WriteCommentBox
 } from "./styles";
+
+import CommentBox from "./Comments/CommentBox";
 
 const Avatar = styled(Image)`
   height: 25px;
   margin: 0 15px;
 `;
 
-const WriteCommentBox = styled.div`
-display: flex;
-justify-content: stretch
-`
+
 
 const TicketDetailPage = () => {
   const params = useParams();
   const [ticket, setTicket] = useState();
   const [spaceMembers, setSpaceMembers] = useState();
   const [spaceId, setSpaceId] = useState();
-  const [comment, setComment] = useState()
-  const [comments, setComments] = useState()
+  const [comment, setComment] = useState();
+  const [comments, setComments] = useState();
 
   //    grab ticket on mount
   useEffect(() => {
@@ -36,8 +36,8 @@ const TicketDetailPage = () => {
   }, []);
 
   useEffect(() => {
-      console.log(ticket);
-  }, [ticket])
+    console.log(comment);
+  }, [comment]);
 
   //   form change handlers
   const handleTicketInfoChange = (name, value) => {
@@ -73,7 +73,28 @@ const TicketDetailPage = () => {
     );
   };
 
-  
+  const handleCommentSubmit = async(e) => {
+    e.preventDefault();
+
+    let newComment = await fetch(
+      process.env.REACT_APP_BACKEND_URL +
+        "/api/v1/comments/" +
+        ticket.id +
+        "/new_comment",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          detail: comment
+        }),
+      }
+    );
+    setComment('')
+
+  }
 
   const statusOptions = [
     { value: "To do", label: "To do" },
@@ -120,7 +141,7 @@ const TicketDetailPage = () => {
                     name="title"
                     defaultValue={ticket.title}
                     onChange={(e) =>
-                        handleTicketInfoChange(e.target.name, e.target.value)
+                      handleTicketInfoChange(e.target.name, e.target.value)
                     }
                   />
                 </Form.Group>
@@ -132,7 +153,7 @@ const TicketDetailPage = () => {
                     name="description"
                     defaultValue={ticket.description}
                     onChange={(e) =>
-                        handleTicketInfoChange(e.target.name, e.target.value)
+                      handleTicketInfoChange(e.target.name, e.target.value)
                     }
                   />
                 </Form.Group>
@@ -146,7 +167,7 @@ const TicketDetailPage = () => {
                       label: ticket.status,
                     }}
                     onChange={(target, action) => {
-                        handleTicketInfoChange(action.name, target.value);
+                      handleTicketInfoChange(action.name, target.value);
                     }}
                   />
                 </FormGroup>
@@ -182,6 +203,7 @@ const TicketDetailPage = () => {
             </TicketArea>
             <CommentArea>
               <p>Comments</p>
+              <CommentBox/>
               <WriteCommentBox>
                 <Avatar
                   src={localStorage.getItem("loggedInUserAvatar")}
@@ -189,7 +211,9 @@ const TicketDetailPage = () => {
                   roundedCircle
                 />
                 <Form>
-                <Form.Control as="textarea" rows={3} />
+                  <Form.Control as="textarea" rows={3}  name="detail"  value={comment} onChange={(e) => setComment(e.target.value)}/>
+                  <Button variant="secondary" onClick={()=> setComment(null)}>Cancel</Button>
+                  <Button variant="primary" onClick={handleCommentSubmit}>Comment </Button>
                 </Form>
               </WriteCommentBox>
             </CommentArea>

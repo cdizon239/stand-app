@@ -1,8 +1,10 @@
 import React from 'react'
 
-const CommentBox = () => {
+const CommentBox = (comment) => {
   return (
-    <div>CommentBox</div>
+    <div>
+
+    </div>
   )
 }
 

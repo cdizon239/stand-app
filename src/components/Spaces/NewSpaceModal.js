@@ -13,7 +13,7 @@ export const NewSpaceModal = ({
   setShowNewSpaceForm,
   usersInfo,
   getSpaces,
-  setSpaces
+  setSpaces,
 }) => {
   const [spaceInfo, setSpaceInfo] = useState({
     name: "",
@@ -22,20 +22,37 @@ export const NewSpaceModal = ({
   });
 
   const handleClose = () => setShowNewSpaceForm(false);
-  
+
   const handleFormChange = (name, value) => {
     setSpaceInfo({
       ...spaceInfo,
-      [name]: value
+      [name]: value,
     });
   };
 
-  const handleFormSubmit = async () => {
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
     console.log(spaceInfo);
-    createSpace(spaceInfo)
-    getSpaces(setSpaces)
-    setShowNewSpaceForm(false)
-  }
+    const { name, privacy, members } = spaceInfo;
+    let createSpace = await fetch(
+      process.env.REACT_APP_BACKEND_URL + "/api/v1/spaces/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          name: name,
+          privacy: privacy,
+          members: members,
+        }),
+      }
+    );
+    let createdSpace = await createSpace.json();
+    getSpaces(setSpaces);
+    setShowNewSpaceForm(false);
+  };
 
   const privacyOptions = [
     { value: "private", label: "Private" },
@@ -58,9 +75,6 @@ export const NewSpaceModal = ({
     };
   });
 
-  // useEffect(() => {
-  //   console.log(spaceInfo);
-  // }, [spaceInfo]);
 
   //    handle create space button: make a request to create a space
   return (
@@ -77,7 +91,9 @@ export const NewSpaceModal = ({
                 type="text"
                 placeholder="Please enter new space name"
                 name="name"
-                onChange={(e) => handleFormChange(e.target.name, e.target.value)}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
               />
             </Form.Group>
             <FormGroup>
@@ -101,7 +117,7 @@ export const NewSpaceModal = ({
                 )}
                 name="members"
                 onChange={(target, action) => {
-                  let memberEmails = target.map(item => item.value)
+                  let memberEmails = target.map((item) => item.value);
                   handleFormChange(action.name, memberEmails);
                 }}
               />

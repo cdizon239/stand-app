@@ -1,98 +1,76 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ArrowLeft } from "react-bootstrap-icons";
-import { Form, FormGroup, Image, Button} from "react-bootstrap";
+import { Form, FormGroup, Image, Button } from "react-bootstrap";
 import Select from "react-select";
 import styled from "styled-components";
-import { TicketAndCommentsWrapper, TicketDetailPageWrapper } from "./styles";
+import { getTicket } from "../../utils/getTicket";
+import {
+  TicketAndCommentsWrapper,
+  TicketDetailPageWrapper,
+  TicketArea,
+  CommentArea,
+} from "./styles";
 
 const Avatar = styled(Image)`
   height: 25px;
+  margin: 0 15px;
 `;
+
+const WriteCommentBox = styled.div`
+display: flex;
+justify-content: stretch
+`
 
 const TicketDetailPage = () => {
   const params = useParams();
   const [ticket, setTicket] = useState();
   const [spaceMembers, setSpaceMembers] = useState();
-  const [spaceId, setSpaceId] = useState()
-
-  //  grab the ticket
-  const getTicket = async () => {
-    let ticketToFetch = await fetch(
-      process.env.REACT_APP_BACKEND_URL + "/api/v1/tickets/" + params.ticket_id,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      }
-    );
-    let jsonTicket = await ticketToFetch.json();
-
-    if (jsonTicket) {
-      let fetchedTicket = jsonTicket.data;
-      setTicket(fetchedTicket);
-      setSpaceId(fetchedTicket.space.id)
-
-    //    once you have a ticket, fetch space members
-      let spaceMembers = await fetch(
-        process.env.REACT_APP_BACKEND_URL +
-          "/api/v1/spaces/" +
-          fetchedTicket.space.id,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
-      let jsonSpaceMembers = await spaceMembers.json();
-
-      if (jsonSpaceMembers) {
-        console.log(jsonSpaceMembers.data.members);
-        setSpaceMembers(jsonSpaceMembers.data.members);
-      }
-    }
-  };
+  const [spaceId, setSpaceId] = useState();
+  const [comment, setComment] = useState()
+  const [comments, setComments] = useState()
 
   //    grab ticket on mount
   useEffect(() => {
-    getTicket();
+    getTicket(params.ticket_id, setTicket, setSpaceId, setSpaceMembers);
   }, []);
 
+  useEffect(() => {
+      console.log(ticket);
+  }, [ticket])
+
   //   form change handlers
-  const handleFormChange = (name, value) => {
+  const handleTicketInfoChange = (name, value) => {
     setTicket({
       ...ticket,
       [name]: value,
     });
   };
 
-  const handleFormSubmit = async (e) => {
-      console.log(ticket);
+  const handleTicketUpdateSubmit = async (e) => {
+    console.log(ticket);
     e.preventDefault();
-    const {title, description, status, assignee} = ticket
+    const { title, description, status, assignee } = ticket;
 
     let editTicket = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "/api/v1/tickets/" + ticket.id+"/edit",
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({
-              title: title,
-              description: description,
-              status: status,
-              assignee: assignee.id
-
-          })
-        }
-      );
-    // navigate(`/space/${spaceId}`)
+      process.env.REACT_APP_BACKEND_URL +
+        "/api/v1/tickets/" +
+        ticket.id +
+        "/edit",
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          title: title,
+          description: description,
+          status: status,
+          assignee: assignee.id,
+        }),
+      }
+    );
   };
 
   
@@ -132,7 +110,7 @@ const TicketDetailPage = () => {
             <h1>{ticket.title}</h1>
           </div>
           <TicketAndCommentsWrapper>
-            <div>
+            <TicketArea>
               <Form>
                 <Form.Group className="mb-3">
                   <Form.Label>Ticket</Form.Label>
@@ -142,7 +120,7 @@ const TicketDetailPage = () => {
                     name="title"
                     defaultValue={ticket.title}
                     onChange={(e) =>
-                      handleFormChange(e.target.name, e.target.value)
+                        handleTicketInfoChange(e.target.name, e.target.value)
                     }
                   />
                 </Form.Group>
@@ -154,7 +132,7 @@ const TicketDetailPage = () => {
                     name="description"
                     defaultValue={ticket.description}
                     onChange={(e) =>
-                      handleFormChange(e.target.name, e.target.value)
+                        handleTicketInfoChange(e.target.name, e.target.value)
                     }
                   />
                 </Form.Group>
@@ -168,7 +146,7 @@ const TicketDetailPage = () => {
                       label: ticket.status,
                     }}
                     onChange={(target, action) => {
-                      handleFormChange(action.name, target.value);
+                        handleTicketInfoChange(action.name, target.value);
                     }}
                   />
                 </FormGroup>
@@ -192,17 +170,29 @@ const TicketDetailPage = () => {
                         ),
                       }}
                       onChange={(target, action) => {
-                        handleFormChange(action.name, target.value);
+                        handleTicketInfoChange(action.name, target.value);
                       }}
                     />
                   </FormGroup>
                 )}
               </Form>
-              <Button variant="primary" onClick={handleFormSubmit}>
+              <Button variant="primary" onClick={handleTicketUpdateSubmit}>
                 Save
               </Button>
-            </div>
-            <div> Comment area</div>
+            </TicketArea>
+            <CommentArea>
+              <p>Comments</p>
+              <WriteCommentBox>
+                <Avatar
+                  src={localStorage.getItem("loggedInUserAvatar")}
+                  referrerPolicy="no-referrer"
+                  roundedCircle
+                />
+                <Form>
+                <Form.Control as="textarea" rows={3} />
+                </Form>
+              </WriteCommentBox>
+            </CommentArea>
           </TicketAndCommentsWrapper>
         </TicketDetailPageWrapper>
       )}

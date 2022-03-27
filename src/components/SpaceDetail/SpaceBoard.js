@@ -55,7 +55,6 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
               return (
                 <ColumnWrapper key={id}>
                   <h5>{id}</h5>
-                  <PlusCircleFill onClick={() => setShowNewTicketForm(true)} />
                   <Droppable droppableId={id} key={id}>
                     {/*  provided are styles, props, etc */}
                     {(provided, snapshot) => {
@@ -67,6 +66,7 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
                             background: snapshot.isDraggingOver
                               ? "lightBlue"
                               : "#F0EFF4",
+                            borderRadius: "5px",
                             padding: 4,
                             width: 250,
                             minHeight: 500,

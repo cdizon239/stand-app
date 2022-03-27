@@ -44,10 +44,10 @@ export const SpaceDetailPage = () => {
   };
 
   const fetchTickets = async () => {
-      let fetchedTickets = await getTickets(space?.id);
-      if (fetchedTickets) {
-        setTickets(fetchedTickets);
-      }
+    let fetchedTickets = await getTickets(space?.id);
+    if (fetchedTickets) {
+      setTickets(fetchedTickets);
+    }
   };
 
   useEffect(() => {
@@ -55,27 +55,33 @@ export const SpaceDetailPage = () => {
   }, []);
 
   useEffect(() => {
-    fetchTickets()
+    fetchTickets();
   }, [space]);
-
 
   useEffect(() => {
     console.log(tickets);
-  }, [tickets])
-
-
+  }, [tickets]);
 
   return (
     <>
       {space && (
         <div>
           <SpaceDetailHeader space={space} />
-          {tickets.length > 0 ? 
-            <SpaceBoard
-              tickets={tickets}
-              setShowNewTicketForm={setShowNewTicketForm}
-              fetchTickets={fetchTickets}
-            /> : <PlusCircleFill onClick={() => setShowNewTicketForm(true)}/>}
+          {tickets.length > 0 ? (
+            <>
+              <div onClick={() => setShowNewTicketForm(true)} >
+                <PlusCircleFill/>
+                <p>Create a ticket</p>
+              </div>
+              <SpaceBoard
+                tickets={tickets}
+                setShowNewTicketForm={setShowNewTicketForm}
+                fetchTickets={fetchTickets}
+              />
+            </>
+          ) : (
+            <PlusCircleFill onClick={() => setShowNewTicketForm(true)} />
+          )}
           <NewTicketModal
             showNewTicketForm={showNewTicketForm}
             setShowNewTicketForm={setShowNewTicketForm}
@@ -83,7 +89,7 @@ export const SpaceDetailPage = () => {
             fetchTickets={fetchTickets}
             spaceId={space.id}
           />
-          <VideoChat/>
+          <VideoChat />
         </div>
       )}
     </>

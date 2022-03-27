@@ -14,6 +14,7 @@ export const DraggableTicket = styled.div`
   min-height: 50px;
   color: white;
   display: flex;
+  border-radius: 3px;
   justify-content: space-between;
 `;
 

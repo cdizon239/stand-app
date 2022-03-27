@@ -72,6 +72,7 @@ export const SpaceDetailPage = () => {
             <SpaceBoard
               tickets={tickets}
               setShowNewTicketForm={setShowNewTicketForm}
+              fetchTickets={fetchTickets}
             />
           )}
           <NewTicketModal

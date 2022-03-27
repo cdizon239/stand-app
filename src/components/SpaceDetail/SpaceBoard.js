@@ -6,7 +6,7 @@ import { ColumnWrapper, DraggableTicket } from "./styles";
 import TicketDropdown from "./Tickets/TicketDropdown";
 import { deleteTicket } from "../../utils/deleteTicket";
 
-const SpaceBoard = ({ tickets, setShowNewTicketForm }) => {
+const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
   const [columns, setColumns] = useState({});
 
   //  put tickets on their categories / status on mount
@@ -87,7 +87,7 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm }) => {
                                         ...provided.draggableProps.style,
                                       }}
                                     >
-                                      <TicketDropdown ticketId={item.id} />
+                                      <TicketDropdown ticketId={item.id} fetchTickets={fetchTickets} />
                                       {item.title}
                                     </DraggableTicket>
                                   );

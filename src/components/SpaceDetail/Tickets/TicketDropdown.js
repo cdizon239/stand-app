@@ -3,10 +3,11 @@ import { Dropdown } from "react-bootstrap";
 import { deleteTicket } from "../../../utils/deleteTicket";
 
 
-const TicketDropdown = ({ticketId}) => {
+const TicketDropdown = ({ticketId, fetchTickets}) => {
 
     const deleteTicketHandler = (ticketId) => {
         deleteTicket(ticketId)
+        fetchTickets()
       }
 
   return (

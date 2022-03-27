@@ -11,6 +11,7 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm }) => {
 
   //  put tickets on their categories / status on mount
   useEffect(() => {
+    console.log(tickets);
     setColumns({
       ...columns,
       "To do": {
@@ -26,12 +27,16 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm }) => {
         items: tickets?.filter((ticket) => ticket.status === "Done"),
       },
     });
-  }, []);
+  }, [tickets]);
+
+  useEffect(() => {
+    console.log(columns);
+  }, [columns])
 
 
   return (
     <>
-      {tickets && (
+      {tickets.length > 0 && (
         <div
           style={{ display: "flex", justifyContent: "center", height: "100%" }}
         >

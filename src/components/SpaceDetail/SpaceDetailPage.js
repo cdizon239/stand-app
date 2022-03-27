@@ -68,7 +68,7 @@ export const SpaceDetailPage = () => {
       {space && (
         <div>
           <SpaceDetailHeader space={space} />
-          {tickets.length > 0 && (
+          {tickets && (
             <SpaceBoard
               tickets={tickets}
               setShowNewTicketForm={setShowNewTicketForm}

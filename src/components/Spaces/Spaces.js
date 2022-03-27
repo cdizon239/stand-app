@@ -23,33 +23,36 @@ const buttonWrapper = styled.div`
   position: fixed;
   bottom: 0;
   right: 0;
-`                                  ;
+`;
 
 export const Spaces = () => {
   const [spaces, setSpaces] = useState([]);
   const navigate = useNavigate();
-  const [showNewSpaceForm, setShowNewSpaceForm] = useState()
-  const [users, setUsers] = useState([])
+  const [showNewSpaceForm, setShowNewSpaceForm] = useState();
+  const [users, setUsers] = useState([]);
 
   const handleShowNewSpaceForm = () => setShowNewSpaceForm(true);
 
   //  on mount, grab all spaces
-  useEffect( async () => {
-    let allSpaces = await getSpaces(setSpaces);
-    if (allSpaces.status == 302) navigate('/login')
-    // if(allSpaces) {
-    //   console.log(allSpaces);
-    //   setSpaces(allSpaces.data)
-    // }
+  useEffect(() => {
+    let fetchSpaces = async () => {
+      let allSpaces = await getSpaces(setSpaces);
+      if (allSpaces.status == 302) navigate("/login");
+    };
+
+    fetchSpaces();
   }, []);
 
-  useEffect( async() => {
-    let allUsers = await getUsers()
-    if(allUsers)  {
-      console.log(allUsers);
-      setUsers(allUsers.data)
-    }
-  }, [])
+  useEffect(() => {
+    let fetchUsers = async () => {
+      let allUsers = await getUsers();
+      if (allUsers) {
+        console.log(allUsers);
+        setUsers(allUsers.data);
+      }
+    };
+    fetchUsers()
+  }, []);
 
   return (
     <>
@@ -59,8 +62,18 @@ export const Spaces = () => {
       <div className="spaces-list-wrapper">
         {spaces && <SpacesList spaces={spaces} />}
       </div>
-      {users && <NewSpaceModal showNewSpaceForm={showNewSpaceForm} setShowNewSpaceForm={setShowNewSpaceForm} usersInfo={users} getSpaces={getSpaces} setSpaces={setSpaces}/>}
-      <StyledButton onClick={handleShowNewSpaceForm}>Create a Space</StyledButton>
+      {users && (
+        <NewSpaceModal
+          showNewSpaceForm={showNewSpaceForm}
+          setShowNewSpaceForm={setShowNewSpaceForm}
+          usersInfo={users}
+          getSpaces={getSpaces}
+          setSpaces={setSpaces}
+        />
+      )}
+      <StyledButton onClick={handleShowNewSpaceForm}>
+        Create a Space
+      </StyledButton>
     </>
   );
 };

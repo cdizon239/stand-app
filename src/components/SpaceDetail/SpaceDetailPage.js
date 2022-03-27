@@ -46,8 +46,30 @@ export const SpaceDetailPage = () => {
   }, []);
 
   useEffect(() => {
-    space && getTickets(setTickets, space.id);
+    const fetchTickets = async () => {
+      if (space) {
+        let fetchedTickets = await getTickets(space.id);
+        if (fetchedTickets) {
+          setTickets(fetchedTickets);
+        }
+      }
+    };
+    fetchTickets()
+    // space && getTickets(setTickets, space.id);
   }, [space]);
+
+  useEffect(() => {
+    // const fetchTickets = async () => {
+    //   let fetchedTickets = await getTickets(space.id);
+    //   if (fetchedTickets) {
+    //     console.log('nefienfinef');
+    //     setTickets(fetchedTickets);
+    //   }
+    // };
+
+    // fetchTickets()
+    getSpace()
+  }, [showNewTicketForm]);
 
   return (
     <>

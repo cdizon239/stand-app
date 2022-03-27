@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { getTickets } from "../../utils/getTickets";
-import { useParams } from "react-router-dom";
 import onDragEnd from "../../utils/onDragEnd";
-import styled from "styled-components";
 import { PlusCircleFill } from "react-bootstrap-icons";
 import { ColumnWrapper, DraggableTicket } from "./styles";
 
@@ -11,7 +8,7 @@ const SpaceBoard = ({ space, tickets, setShowNewTicketForm }) => {
   const [columns, setColumns] = useState({});
 
   //  put tickets on their categories / status on mount
-  useEffect(async () => {
+  useEffect(() => {
     setColumns({
       ...columns,
       "To do": {

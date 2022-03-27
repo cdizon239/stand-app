@@ -1,4 +1,4 @@
-export const createTicket = async (spaceId, ticketInfo, getTickets, setTickets) => {
+export const createTicket = async (spaceId, ticketInfo) => {
     
     let newTicket = await fetch(
         process.env.REACT_APP_BACKEND_URL + "/api/v1/tickets/"+spaceId+'/add_ticket',
@@ -17,7 +17,9 @@ export const createTicket = async (spaceId, ticketInfo, getTickets, setTickets) 
         }
       );
     let createdTicket = newTicket.json()
-    if (createdTicket) {
-        getTickets(setTickets, spaceId)
-    }
+    // if (createdTicket) {
+    //     getTickets(setTickets, spaceId)
+    // }
+
+    return createdTicket.data
 }

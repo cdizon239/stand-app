@@ -30,7 +30,8 @@ export const NewTicketModal = ({
   };
 
   const handleFormSubmit = async () => {
-      await createTicket(spaceId, ticketInfo, getTickets, setTickets)
+      createTicket(spaceId, ticketInfo)
+      getTickets(spaceId)
       setShowNewTicketForm(false)
   }
 

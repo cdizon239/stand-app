@@ -18,7 +18,7 @@ const StyledButton = styled.button`
 
 export const SpaceDetailPage = () => {
   const params = useParams();
-  const [tickets, setTickets] = useState();
+  const [tickets, setTickets] = useState([]);
   const [space, setSpace] = useState();
   const [showNewTicketForm, setShowNewTicketForm] = useState();
 
@@ -41,44 +41,35 @@ export const SpaceDetailPage = () => {
     }
   };
 
+  const fetchTickets = async () => {
+      let fetchedTickets = await getTickets(space?.id);
+      if (fetchedTickets) {
+        setTickets(fetchedTickets);
+      }
+  };
+
   useEffect(() => {
     getSpace();
   }, []);
 
   useEffect(() => {
-    const fetchTickets = async () => {
-      if (space) {
-        let fetchedTickets = await getTickets(space.id);
-        if (fetchedTickets) {
-          setTickets(fetchedTickets);
-        }
-      }
-    };
     fetchTickets()
-    // space && getTickets(setTickets, space.id);
   }, [space]);
 
-  useEffect(() => {
-    // const fetchTickets = async () => {
-    //   let fetchedTickets = await getTickets(space.id);
-    //   if (fetchedTickets) {
-    //     console.log('nefienfinef');
-    //     setTickets(fetchedTickets);
-    //   }
-    // };
 
-    // fetchTickets()
-    getSpace()
-  }, [showNewTicketForm]);
+  useEffect(() => {
+    console.log(tickets);
+  }, [tickets])
+
+
 
   return (
     <>
       {space && (
         <div>
           <SpaceDetailHeader space={space} />
-          {tickets && (
+          {tickets.length > 0 && (
             <SpaceBoard
-              space={space}
               tickets={tickets}
               setShowNewTicketForm={setShowNewTicketForm}
             />
@@ -87,8 +78,7 @@ export const SpaceDetailPage = () => {
             showNewTicketForm={showNewTicketForm}
             setShowNewTicketForm={setShowNewTicketForm}
             spaceMembers={space.members.map((member) => member.user)}
-            getTickets={getTickets}
-            setTickets={setTickets}
+            fetchTickets={fetchTickets}
             spaceId={space.id}
           />
         </div>

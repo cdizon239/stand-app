@@ -3,6 +3,7 @@ import { Modal, Button, Form, FormGroup, Image } from "react-bootstrap";
 import { createTicket } from "../../utils/createTicket";
 import Select from "react-select";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const Avatar = styled(Image)`
   height: 25px;
@@ -12,28 +13,25 @@ export const NewTicketModal = ({
   showNewTicketForm,
   setShowNewTicketForm,
   spaceMembers,
-  getTickets,
-  setTickets,
-  spaceId
+  fetchTickets,
+  spaceId,
 }) => {
-    const [ticketInfo, setTicketInfo] = useState()
-    
-
+  const navigate = useNavigate()
+  const [ticketInfo, setTicketInfo] = useState();
   const handleClose = () => setShowNewTicketForm(false);
   
   const handleFormChange = (name, value) => {
-      setTicketInfo({
-          ...ticketInfo,
-          [name] : value
-      })
-
+    setTicketInfo({
+      ...ticketInfo,
+      [name]: value,
+    });
   };
 
-  const handleFormSubmit = async () => {
-      createTicket(spaceId, ticketInfo)
-      getTickets(spaceId)
-      setShowNewTicketForm(false)
-  }
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    let createdTicket = await createTicket(spaceId, ticketInfo, fetchTickets, setShowNewTicketForm);
+    navigate(`/space/${spaceId}`)
+  };
 
   const statusOptions = [
     { value: "To do", label: "To do" },
@@ -72,7 +70,9 @@ export const NewTicketModal = ({
                 type="text"
                 placeholder="Write the ticket"
                 name="title"
-                onChange={(e) => handleFormChange(e.target.name, e.target.value)}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -81,7 +81,9 @@ export const NewTicketModal = ({
                 type="text"
                 placeholder="Add a ticket description"
                 name="description"
-                onChange={(e) => handleFormChange(e.target.name, e.target.value)}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
               />
             </Form.Group>
             <FormGroup>

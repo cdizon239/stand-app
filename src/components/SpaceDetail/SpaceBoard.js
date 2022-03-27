@@ -4,7 +4,7 @@ import onDragEnd from "../../utils/onDragEnd";
 import { PlusCircleFill } from "react-bootstrap-icons";
 import { ColumnWrapper, DraggableTicket } from "./styles";
 
-const SpaceBoard = ({ space, tickets, setShowNewTicketForm }) => {
+const SpaceBoard = ({ tickets, setShowNewTicketForm }) => {
   const [columns, setColumns] = useState({});
 
   //  put tickets on their categories / status on mount
@@ -42,7 +42,7 @@ const SpaceBoard = ({ space, tickets, setShowNewTicketForm }) => {
             {Object.entries(columns).map(([id, column]) => {
               return (
                 <ColumnWrapper key={id}>
-                  <h2>{id}</h2>
+                  <h5>{id}</h5>
                   <PlusCircleFill onClick={() => setShowNewTicketForm(true)}/>
                   <Droppable droppableId={id} key={id}>
                     {/*  provided are styles, props, etc */}

@@ -37,7 +37,7 @@ export const Spaces = () => {
   useEffect(() => {
     let fetchSpaces = async () => {
       let allSpaces = await getSpaces(setSpaces);
-      if (allSpaces.status == 302) navigate("/login");
+      if (allSpaces.status === 302) navigate("/login");
     };
 
     fetchSpaces();

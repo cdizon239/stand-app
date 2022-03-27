@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Button, Form, FormGroup, Image } from "react-bootstrap";
 import { createSpace } from "../../utils/createSpace";
 import Select from "react-select";

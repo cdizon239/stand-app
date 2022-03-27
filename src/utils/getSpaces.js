@@ -1,4 +1,3 @@
-import React from 'react'
 
 export const getSpaces = async (setSpaces) => {
     let allSpaces = await fetch(

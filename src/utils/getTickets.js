@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const getTickets =  async (spaceId) => {
     let allTickets = await fetch(
         process.env.REACT_APP_BACKEND_URL + "/api/v1/tickets/" + spaceId+ '/all_tickets'

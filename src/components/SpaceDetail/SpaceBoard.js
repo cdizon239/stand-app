@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import onDragEnd from "../../utils/onDragEnd";
-import { PlusCircleFill } from "react-bootstrap-icons";
+import { PlusCircleFill, ThreeDots } from "react-bootstrap-icons";
 import { ColumnWrapper, DraggableTicket } from "./styles";
+import TicketDropdown from "./Tickets/TicketDropdown";
+import { deleteTicket } from "../../utils/deleteTicket";
 
 const SpaceBoard = ({ tickets, setShowNewTicketForm }) => {
   const [columns, setColumns] = useState({});
@@ -35,7 +37,7 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm }) => {
         >
           <DragDropContext
             onDragEnd={(result) => {
-              onDragEnd(result, columns, setColumns)
+              onDragEnd(result, columns, setColumns);
             }}
           >
             {/*  each droppable has a key that SHOULD BE unique */}
@@ -43,7 +45,7 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm }) => {
               return (
                 <ColumnWrapper key={id}>
                   <h5>{id}</h5>
-                  <PlusCircleFill onClick={() => setShowNewTicketForm(true)}/>
+                  <PlusCircleFill onClick={() => setShowNewTicketForm(true)} />
                   <Droppable droppableId={id} key={id}>
                     {/*  provided are styles, props, etc */}
                     {(provided, snapshot) => {
@@ -80,6 +82,7 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm }) => {
                                         ...provided.draggableProps.style,
                                       }}
                                     >
+                                      <TicketDropdown ticketId={item.id} />
                                       {item.title}
                                     </DraggableTicket>
                                   );

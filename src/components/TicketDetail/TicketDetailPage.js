@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ArrowLeft } from "react-bootstrap-icons";
-import { Form, FormGroup, Image } from "react-bootstrap";
+import { Form, FormGroup, Image, Button} from "react-bootstrap";
 import Select from "react-select";
 import styled from "styled-components";
 import { TicketAndCommentsWrapper, TicketDetailPageWrapper } from "./styles";
@@ -14,6 +14,7 @@ const TicketDetailPage = () => {
   const params = useParams();
   const [ticket, setTicket] = useState();
   const [spaceMembers, setSpaceMembers] = useState();
+  const [spaceId, setSpaceId] = useState()
 
   //  grab the ticket
   const getTicket = async () => {
@@ -30,10 +31,15 @@ const TicketDetailPage = () => {
     let jsonTicket = await ticketToFetch.json();
 
     if (jsonTicket) {
-        let fetchedTicket = jsonTicket.data
+      let fetchedTicket = jsonTicket.data;
       setTicket(fetchedTicket);
+      setSpaceId(fetchedTicket.space.id)
+
+    //    once you have a ticket, fetch space members
       let spaceMembers = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "/api/v1/spaces/" + fetchedTicket.space.id,
+        process.env.REACT_APP_BACKEND_URL +
+          "/api/v1/spaces/" +
+          fetchedTicket.space.id,
         {
           method: "GET",
           headers: {
@@ -43,7 +49,7 @@ const TicketDetailPage = () => {
         }
       );
       let jsonSpaceMembers = await spaceMembers.json();
-  
+
       if (jsonSpaceMembers) {
         console.log(jsonSpaceMembers.data.members);
         setSpaceMembers(jsonSpaceMembers.data.members);
@@ -56,7 +62,6 @@ const TicketDetailPage = () => {
     getTicket();
   }, []);
 
-
   //   form change handlers
   const handleFormChange = (name, value) => {
     setTicket({
@@ -64,6 +69,33 @@ const TicketDetailPage = () => {
       [name]: value,
     });
   };
+
+  const handleFormSubmit = async (e) => {
+      console.log(ticket);
+    e.preventDefault();
+    const {title, description, status, assignee} = ticket
+
+    let editTicket = await fetch(
+        process.env.REACT_APP_BACKEND_URL + "/api/v1/tickets/" + ticket.id+"/edit",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+              title: title,
+              description: description,
+              status: status,
+              assignee: assignee.id
+
+          })
+        }
+      );
+    // navigate(`/space/${spaceId}`)
+  };
+
+  
 
   const statusOptions = [
     { value: "To do", label: "To do" },
@@ -73,7 +105,7 @@ const TicketDetailPage = () => {
   ];
 
   const membersDropdown = spaceMembers?.map((member) => {
-      console.log(member);
+    console.log(member);
     return {
       value: member.user.id,
       label: (
@@ -82,7 +114,7 @@ const TicketDetailPage = () => {
             src={member.user.img_url}
             referrerPolicy="no-referrer"
             roundedCircle
-          /> 
+          />
           {member.user.name}
         </div>
       ),
@@ -140,8 +172,8 @@ const TicketDetailPage = () => {
                     }}
                   />
                 </FormGroup>
-                {
-                    spaceMembers && <FormGroup>
+                {spaceMembers && (
+                  <FormGroup>
                     <Form.Label>Assignee</Form.Label>
                     <Select
                       options={membersDropdown}
@@ -164,8 +196,11 @@ const TicketDetailPage = () => {
                       }}
                     />
                   </FormGroup>
-                }
+                )}
               </Form>
+              <Button variant="primary" onClick={handleFormSubmit}>
+                Save
+              </Button>
             </div>
             <div> Comment area</div>
           </TicketAndCommentsWrapper>

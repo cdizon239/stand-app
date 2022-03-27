@@ -66,7 +66,7 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
                           style={{
                             background: snapshot.isDraggingOver
                               ? "lightBlue"
-                              : "lightGray",
+                              : "#F0EFF4",
                             padding: 4,
                             width: 250,
                             minHeight: 500,
@@ -89,7 +89,7 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
                                       style={{
                                         backgroundColor: snapshot.isDragging
                                           ? "#26384a"
-                                          : "#456C86",
+                                          : "#ADB6C4",
                                         ...provided.draggableProps.style,
                                       }}
                                     >

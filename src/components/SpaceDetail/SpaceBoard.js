@@ -4,7 +4,7 @@ import onDragEnd from "../../utils/onDragEnd";
 import { PlusCircleFill, ThreeDots } from "react-bootstrap-icons";
 import { ColumnWrapper, DraggableTicket } from "./styles";
 import TicketDropdown from "./Tickets/TicketDropdown";
-import { deleteTicket } from "../../utils/deleteTicket";
+import { NavLink } from "react-router-dom";
 
 const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
   const [columns, setColumns] = useState({});
@@ -18,7 +18,8 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
         items: tickets?.filter((ticket) => ticket.status === "To do") || [],
       },
       "In Progress": {
-        items: tickets?.filter((ticket) => ticket.status === "In Progress") || [],
+        items:
+          tickets?.filter((ticket) => ticket.status === "In Progress") || [],
       },
       Blocked: {
         items: tickets?.filter((ticket) => ticket.status === "Blocked") || [],
@@ -31,8 +32,7 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
 
   useEffect(() => {
     console.log(columns);
-  }, [columns])
-
+  }, [columns]);
 
   return (
     <>
@@ -69,30 +69,39 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
                         >
                           {column.items.map((item, index) => {
                             return (
-                              <Draggable
-                                key={item.id}
-                                draggableId={`${item.id}`}
-                                index={index}
+                              <NavLink
+                                // className="nav-link"
+                                to={`/ticket/${item.id}`}
+                                key={`ticket_${item.id}`}
                               >
-                                {(provided, snapshot) => {
-                                  return (
-                                    <DraggableTicket
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                      ref={provided.innerRef}
-                                      style={{
-                                        backgroundColor: snapshot.isDragging
-                                          ? "#26384a"
-                                          : "#456C86",
-                                        ...provided.draggableProps.style,
-                                      }}
-                                    >
-                                      <TicketDropdown ticketId={item.id} fetchTickets={fetchTickets} />
-                                      {item.title}
-                                    </DraggableTicket>
-                                  );
-                                }}
-                              </Draggable>
+                                <Draggable
+                                  key={item.id}
+                                  draggableId={`${item.id}`}
+                                  index={index}
+                                >
+                                  {(provided, snapshot) => {
+                                    return (
+                                      <DraggableTicket
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                        ref={provided.innerRef}
+                                        style={{
+                                          backgroundColor: snapshot.isDragging
+                                            ? "#26384a"
+                                            : "#456C86",
+                                          ...provided.draggableProps.style,
+                                        }}
+                                      >
+                                        <TicketDropdown
+                                          ticketId={item.id}
+                                          fetchTickets={fetchTickets}
+                                        />
+                                        {item.title}
+                                      </DraggableTicket>
+                                    );
+                                  }}
+                                </Draggable>
+                              </NavLink>
                             );
                           })}
                           {provided.placeholder}

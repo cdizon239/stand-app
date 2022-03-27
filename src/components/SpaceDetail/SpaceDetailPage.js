@@ -6,6 +6,7 @@ import SpaceBoard from "./SpaceBoard";
 import { getTickets } from "../../utils/getTickets";
 import { NewTicketModal } from "./NewTicketModal";
 import { PlusCircleFill } from "react-bootstrap-icons";
+import { VideoChat } from "../Video/VideoChat";
 
 const StyledButton = styled.button`
   border-radius: 25px;
@@ -82,6 +83,7 @@ export const SpaceDetailPage = () => {
             fetchTickets={fetchTickets}
             spaceId={space.id}
           />
+          <VideoChat/>
         </div>
       )}
     </>

@@ -15,16 +15,16 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
     setColumns({
       ...columns,
       "To do": {
-        items: tickets?.filter((ticket) => ticket.status === "To do"),
+        items: tickets?.filter((ticket) => ticket.status === "To do") || [],
       },
       "In Progress": {
-        items: tickets?.filter((ticket) => ticket.status === "In Progress"),
+        items: tickets?.filter((ticket) => ticket.status === "In Progress") || [],
       },
       Blocked: {
-        items: tickets?.filter((ticket) => ticket.status === "Blocked"),
+        items: tickets?.filter((ticket) => ticket.status === "Blocked") || [],
       },
       Done: {
-        items: tickets?.filter((ticket) => ticket.status === "Done"),
+        items: tickets?.filter((ticket) => ticket.status === "Done") || [],
       },
     });
   }, [tickets]);

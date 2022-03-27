@@ -5,6 +5,7 @@ import SpaceDetailHeader from "./SpaceDetailHeader";
 import SpaceBoard from "./SpaceBoard";
 import { getTickets } from "../../utils/getTickets";
 import { NewTicketModal } from "./NewTicketModal";
+import { PlusCircleFill } from "react-bootstrap-icons";
 
 const StyledButton = styled.button`
   border-radius: 25px;
@@ -68,13 +69,12 @@ export const SpaceDetailPage = () => {
       {space && (
         <div>
           <SpaceDetailHeader space={space} />
-          {tickets && (
+          {tickets.length > 0 ? 
             <SpaceBoard
               tickets={tickets}
               setShowNewTicketForm={setShowNewTicketForm}
               fetchTickets={fetchTickets}
-            />
-          )}
+            /> : <PlusCircleFill onClick={() => setShowNewTicketForm(true)}/>}
           <NewTicketModal
             showNewTicketForm={showNewTicketForm}
             setShowNewTicketForm={setShowNewTicketForm}

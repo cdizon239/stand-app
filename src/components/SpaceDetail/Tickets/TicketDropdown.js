@@ -1,14 +1,13 @@
 import React from "react";
 import { Dropdown } from "react-bootstrap";
 import { deleteTicket } from "../../../utils/deleteTicket";
+import { NavLink } from "react-router-dom";
 
-
-const TicketDropdown = ({ticketId, fetchTickets}) => {
-
-    const deleteTicketHandler = (ticketId) => {
-        deleteTicket(ticketId)
-        fetchTickets()
-      }
+const TicketDropdown = ({ ticketId, fetchTickets }) => {
+  const deleteTicketHandler = (ticketId) => {
+    deleteTicket(ticketId);
+    fetchTickets();
+  };
 
   return (
     <Dropdown>
@@ -19,11 +18,21 @@ const TicketDropdown = ({ticketId, fetchTickets}) => {
           border: "none",
           float: "right",
         }}
-      >
-      </Dropdown.Toggle>
+      ></Dropdown.Toggle>
       <Dropdown.Menu>
-        <Dropdown.Item>Edit</Dropdown.Item>
-        <Dropdown.Item onClick={()=> deleteTicketHandler(ticketId)}>Delete</Dropdown.Item>
+        <Dropdown.Item>
+          {" "}
+          <NavLink
+            className="nav-link"
+            to={`/ticket/${ticketId}`}
+            key={`ticket_${ticketId}`}
+          >
+            View
+          </NavLink>
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => deleteTicketHandler(ticketId)}>
+          Delete
+        </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );

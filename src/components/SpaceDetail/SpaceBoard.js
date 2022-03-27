@@ -4,7 +4,12 @@ import onDragEnd from "../../utils/onDragEnd";
 import { PlusCircleFill, ThreeDots } from "react-bootstrap-icons";
 import { ColumnWrapper, DraggableTicket } from "./styles";
 import TicketDropdown from "./Tickets/TicketDropdown";
-import { NavLink } from "react-router-dom";
+import { Image } from "react-bootstrap";
+import styled from "styled-components";
+
+const Avatar = styled(Image)`
+  height: 25px;
+`;
 
 const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
   const [columns, setColumns] = useState({});
@@ -68,40 +73,42 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
                           }}
                         >
                           {column.items.map((item, index) => {
+                            console.log(item);
                             return (
-                              <NavLink
-                                // className="nav-link"
-                                to={`/ticket/${item.id}`}
-                                key={`ticket_${item.id}`}
+                              <Draggable
+                                key={item.id}
+                                draggableId={`${item.id}`}
+                                index={index}
                               >
-                                <Draggable
-                                  key={item.id}
-                                  draggableId={`${item.id}`}
-                                  index={index}
-                                >
-                                  {(provided, snapshot) => {
-                                    return (
-                                      <DraggableTicket
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                        ref={provided.innerRef}
-                                        style={{
-                                          backgroundColor: snapshot.isDragging
-                                            ? "#26384a"
-                                            : "#456C86",
-                                          ...provided.draggableProps.style,
-                                        }}
-                                      >
+                                {(provided, snapshot) => {
+                                  return (
+                                    <DraggableTicket
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                      ref={provided.innerRef}
+                                      style={{
+                                        backgroundColor: snapshot.isDragging
+                                          ? "#26384a"
+                                          : "#456C86",
+                                        ...provided.draggableProps.style,
+                                      }}
+                                    >
+                                      <p>{item.title}</p>
+                                      <div>
                                         <TicketDropdown
                                           ticketId={item.id}
                                           fetchTickets={fetchTickets}
                                         />
-                                        {item.title}
-                                      </DraggableTicket>
-                                    );
-                                  }}
-                                </Draggable>
-                              </NavLink>
+                                        <Avatar
+                                          src={item.assignee.img_url}
+                                          referrerPolicy="no-referrer"
+                                          roundedCircle
+                                        />
+                                      </div>
+                                    </DraggableTicket>
+                                  );
+                                }}
+                              </Draggable>
                             );
                           })}
                           {provided.placeholder}

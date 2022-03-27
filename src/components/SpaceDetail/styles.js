@@ -9,10 +9,12 @@ export const ColumnWrapper = styled.div`
 
 export const DraggableTicket = styled.div`
   user-select: none;
-  padding: 16;
+  padding: 5px 10px;
   margin: 0 0 8px 0;
   min-height: 50px;
   color: white;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const HeaderWrapper = styled.div`
@@ -25,3 +27,4 @@ display: flex;
 flex-direction: column;
 align-items: flex-start;
 `
+

@@ -9,7 +9,7 @@ const SpaceDetailHeader = ({ space }) => {
         key: member.user.email,
         name: member.user.name,
         href: '#',
-        src:member.user.name
+        src:member.user.img_url
     }))
 
   return (

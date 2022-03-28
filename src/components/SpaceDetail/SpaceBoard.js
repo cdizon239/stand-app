@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import onDragEnd from "../../utils/onDragEnd";
 import { PlusCircleFill, ThreeDots } from "react-bootstrap-icons";
-import { ColumnWrapper, DraggableTicket } from "./styles";
+import { Board, ColumnWrapper, DraggableTicket } from "./styles";
 import TicketDropdown from "./Tickets/TicketDropdown";
 import { Image } from "react-bootstrap";
 import styled from "styled-components";
@@ -38,8 +38,7 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
   return (
     <>
       {tickets.length > 0 && (
-        <div
-          style={{ display: "flex", justifyContent: "center", height: "100%" }}
+        <Board
         >
           <DragDropContext
             onDragEnd={(result) => {
@@ -64,8 +63,8 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
                               : "#F0EFF4",
                             borderRadius: "5px",
                             padding: 4,
-                            width: 250,
-                            minHeight: 500,
+                            width: "100%",
+                            minHeight: "90vh",
                           }}
                         >
                           {column.items.map((item, index) => {
@@ -116,7 +115,7 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
               );
             })}
           </DragDropContext>
-        </div>
+        </Board>
       )}
     </>
   );

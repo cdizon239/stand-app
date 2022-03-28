@@ -1,10 +1,19 @@
 import styled from "styled-components";
 
+export const Board = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  padding: 0 30px;
+`;
+
 export const ColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 0 5px;
+  width: 100%;
 `;
 
 export const DraggableTicket = styled.div`
@@ -16,6 +25,7 @@ export const DraggableTicket = styled.div`
   display: flex;
   border-radius: 3px;
   justify-content: space-between;
+  font-size: 14px;
 `;
 
 export const HeaderWrapper = styled.div`

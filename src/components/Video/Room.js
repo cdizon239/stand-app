@@ -50,8 +50,10 @@ export const Room = ({ roomName, room, handleLogout, handleAudioToggle, handleVi
           ""
         )}
       </div>
-      <h3>Remote Participants</h3>
-      <div className="remote-participants">{remoteParticipants}</div>
+      <div className="remote-participants">
+      {participants.length > 1 && <h3>Remote Participants</h3>}
+        {remoteParticipants}
+        </div>
     </div>
   );
 };

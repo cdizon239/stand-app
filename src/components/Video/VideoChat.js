@@ -1,17 +1,20 @@
 //  resource: https://www.twilio.com/blog/video-chat-react-hooks
 import React, { useState, useCallback, useEffect } from "react";
 import Video from "twilio-video";
-import {VideoLobby} from "./VideoLobby"
-import {Room} from "./Room";
+import { VideoLobby } from "./VideoLobby";
+import { Room } from "./Room";
+import "./video.css";
+import { ArrowLeft } from "react-bootstrap-icons";
+import { useNavigate } from "react-router-dom";
 
 export const VideoChat = () => {
+  const navigate = useNavigate()
   const [username, setUsername] = useState("");
   const [roomName, setRoomName] = useState("");
   const [room, setRoom] = useState(null);
   const [connecting, setConnecting] = useState(false);
-  const [toggleAudio, setToggleAudio] = useState(true)
-  const [toggleVideo, setToggleVideo] = useState(true)
-
+  const [toggleAudio, setToggleAudio] = useState(true);
+  const [toggleVideo, setToggleVideo] = useState(true);
 
   const handleUsernameChange = useCallback((event) => {
     setUsername(event.target.value);
@@ -67,7 +70,7 @@ export const VideoChat = () => {
   }, []);
 
   const handleAudioToggle = () => {
-    room.localParticipant.audioTracks.forEach(track => {
+    room.localParticipant.audioTracks.forEach((track) => {
       if (track.track.isEnabled) {
         track.track.disable();
       } else {
@@ -78,7 +81,7 @@ export const VideoChat = () => {
   };
 
   const handleVideoToggle = () => {
-    room.localParticipant.videoTracks.forEach(track => {
+    room.localParticipant.videoTracks.forEach((track) => {
       if (track.track.isEnabled) {
         track.track.disable();
       } else {
@@ -87,8 +90,6 @@ export const VideoChat = () => {
       setToggleVideo(track.track.isEnabled);
     });
   };
-
-
 
   useEffect(() => {
     if (room) {
@@ -112,10 +113,15 @@ export const VideoChat = () => {
   let render;
   if (room) {
     render = (
-      <Room roomName={roomName} room={room} handleLogout={handleLogout}             handleAudioToggle={handleAudioToggle}
-      handleVideoToggle={handleVideoToggle}
-      toggleAudio={toggleAudio}
-      toggleVideo={toggleVideo}/>
+      <Room
+        roomName={roomName}
+        room={room}
+        handleLogout={handleLogout}
+        handleAudioToggle={handleAudioToggle}
+        handleVideoToggle={handleVideoToggle}
+        toggleAudio={toggleAudio}
+        toggleVideo={toggleVideo}
+      />
     );
   } else {
     render = (
@@ -129,5 +135,15 @@ export const VideoChat = () => {
       />
     );
   }
-  return render;
+  return (
+    <>
+      <div>
+        <ArrowLeft
+          className="fs-2"
+          onClick={() => navigate(-1, { replace: true })}
+        />
+      </div>
+      {render}
+    </>
+  );
 };

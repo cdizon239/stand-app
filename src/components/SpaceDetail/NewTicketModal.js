@@ -73,6 +73,7 @@ export const NewTicketModal = ({
                 onChange={(e) =>
                   handleFormChange(e.target.name, e.target.value)
                 }
+                required
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -94,6 +95,7 @@ export const NewTicketModal = ({
                 onChange={(target, action) => {
                   handleFormChange(action.name, target.value);
                 }}
+                required
               />
             </FormGroup>
             <FormGroup>

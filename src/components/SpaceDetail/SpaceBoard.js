@@ -9,6 +9,7 @@ import styled from "styled-components";
 
 const Avatar = styled(Image)`
   height: 25px;
+  margin-bottom: 5px;
 `;
 
 const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {

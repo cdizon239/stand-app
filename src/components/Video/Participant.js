@@ -40,6 +40,9 @@ export const Participant = ({ participant,   handleAudioToggle,
     participant.on("trackSubscribed", trackSubscribed);
     participant.on("trackUnsubscribed", trackUnsubscribed);
 
+    //log
+    console.log(participant);
+
     return () => {
       setVideoTracks([]);
       setAudioTracks([]);
@@ -77,10 +80,7 @@ export const Participant = ({ participant,   handleAudioToggle,
 
   return (
     <div className="participant">
-      <h3>{participant.identity}</h3>
-      <video ref={videoRef} autoPlay={true} />
-      <audio ref={audioRef} autoPlay={true} muted={true} />
-      <audio ref={audioRef} autoPlay={true} />
+      <h3>{participant.username}</h3>
       {isLocal && (
         <Controls
           handleAudioToggle={handleAudioToggle}
@@ -89,6 +89,9 @@ export const Participant = ({ participant,   handleAudioToggle,
           video={toggleVideo}
         />
       )}
+      <video ref={videoRef} autoPlay={true} />
+      <audio ref={audioRef} autoPlay={true} muted={true} />
+      <audio ref={audioRef} autoPlay={true} />
     </div>
   );
 };

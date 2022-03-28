@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import SpaceDetailHeader from "./SpaceDetailHeader";
 import SpaceBoard from "./SpaceBoard";
@@ -21,6 +21,7 @@ const StyledButton = styled.button`
 `;
 
 export const SpaceDetailPage = () => {
+  const navigate = useNavigate()
   const params = useParams();
   const [tickets, setTickets] = useState([]);
   const [space, setSpace] = useState();
@@ -50,7 +51,7 @@ export const SpaceDetailPage = () => {
             <SpaceDetailHeader space={space} />
             {tickets.length > 0 ? (
               <>
-                <SpaceDetailButton>
+                <SpaceDetailButton onClick={() => navigate(`/${space.id}/videoRoom`)}>
                   <BoxArrowInRight style={{ marginRight: "5px" }} />
                   Enter a room
                 </SpaceDetailButton>
@@ -81,9 +82,9 @@ export const SpaceDetailPage = () => {
               spaceId={space.id}
             />
           </div>
-          <div>
+          {/* <div>
             <VideoChat />
-          </div>
+          </div> */}
         </div>
       )}
     </>

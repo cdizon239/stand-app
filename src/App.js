@@ -16,6 +16,7 @@ function App() {
         <Route path="/all_spaces" element={<Spaces />}></Route>
         <Route path="/space/:space_id" element={<SpaceDetailPage/>}></Route>
         <Route path="/ticket/:ticket_id" element={<TicketDetailPage/>}></Route>
+        <Route path="/:space_id/videoRoom" element={<VideoChat/>}></Route>
       </Routes>
     </AppLayout>
   );

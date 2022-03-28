@@ -20,16 +20,13 @@ const TicketDropdown = ({ ticketId, fetchTickets }) => {
         }}
       ></Dropdown.Toggle>
       <Dropdown.Menu>
-        <Dropdown.Item>
-          {" "}
-          <NavLink
-            className="nav-link"
+        <Dropdown.Item href={`/ticket/${ticketId}`}>View</Dropdown.Item>
+        {/* <NavLink
             to={`/ticket/${ticketId}`}
             key={`ticket_${ticketId}`}
           >
             View
-          </NavLink>
-        </Dropdown.Item>
+          </NavLink> */}
         <Dropdown.Item onClick={() => deleteTicketHandler(ticketId)}>
           Delete
         </Dropdown.Item>

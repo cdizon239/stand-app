@@ -43,7 +43,7 @@ export const MemberSectionWrapper = styled.div`
   align-items: center;
 `;
 
-export const CreateTicketButton = styled.div`
+export const SpaceDetailButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

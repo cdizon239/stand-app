@@ -3,10 +3,10 @@ import { Dropdown } from "react-bootstrap";
 import { deleteTicket } from "../../../utils/deleteTicket";
 import { NavLink } from "react-router-dom";
 
-const TicketDropdown = ({ ticketId, fetchTickets }) => {
-  const deleteTicketHandler = (ticketId) => {
-    deleteTicket(ticketId);
-    fetchTickets();
+const TicketDropdown = ({ ticketId, getTickets, setTickets, spaceId }) => {
+  const deleteTicketHandler = async () => {
+    await deleteTicket(ticketId);
+    await getTickets(spaceId, setTickets)
   };
 
   return (
@@ -21,13 +21,7 @@ const TicketDropdown = ({ ticketId, fetchTickets }) => {
       ></Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item href={`/ticket/${ticketId}`}>View</Dropdown.Item>
-        {/* <NavLink
-            to={`/ticket/${ticketId}`}
-            key={`ticket_${ticketId}`}
-          >
-            View
-          </NavLink> */}
-        <Dropdown.Item onClick={() => deleteTicketHandler(ticketId)}>
+        <Dropdown.Item onClick={() => deleteTicketHandler()}>
           Delete
         </Dropdown.Item>
       </Dropdown.Menu>

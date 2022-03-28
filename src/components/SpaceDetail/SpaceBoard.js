@@ -12,7 +12,13 @@ const Avatar = styled(Image)`
   margin-bottom: 5px;
 `;
 
-const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
+const SpaceBoard = ({
+  tickets,
+  setShowNewTicketForm,
+  getTickets,
+  setTickets,
+  spaceId,
+}) => {
   const [columns, setColumns] = useState({});
 
   //  put tickets on their categories / status on mount
@@ -39,8 +45,7 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
   return (
     <>
       {tickets.length > 0 && (
-        <Board
-        >
+        <Board>
           <DragDropContext
             onDragEnd={(result) => {
               onDragEnd(result, columns, setColumns);
@@ -93,7 +98,9 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
                                       <div>
                                         <TicketDropdown
                                           ticketId={item.id}
-                                          fetchTickets={fetchTickets}
+                                          getTickets={getTickets}
+                                          setTickets={setTickets}
+                                          spaceId={spaceId}
                                         />
                                         <Avatar
                                           src={item.assignee.img_url}

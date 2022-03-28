@@ -13,7 +13,8 @@ export const NewTicketModal = ({
   showNewTicketForm,
   setShowNewTicketForm,
   spaceMembers,
-  fetchTickets,
+  getTickets,
+  setTickets,
   spaceId,
 }) => {
   const navigate = useNavigate()
@@ -29,7 +30,8 @@ export const NewTicketModal = ({
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    let createdTicket = await createTicket(spaceId, ticketInfo, fetchTickets, setShowNewTicketForm);
+    let createdTicket = await createTicket(spaceId, ticketInfo, setShowNewTicketForm);
+    await getTickets(spaceId, setTickets);
     navigate(`/space/${spaceId}`)
   };
 

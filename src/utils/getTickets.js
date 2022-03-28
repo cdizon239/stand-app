@@ -1,4 +1,4 @@
-export const getTickets =  async (spaceId) => {
+export const getTickets =  async (spaceId, setTickets) => {
     let allTickets = await fetch(
         process.env.REACT_APP_BACKEND_URL + "/api/v1/tickets/" + spaceId+ '/all_tickets'
         ,{
@@ -11,10 +11,10 @@ export const getTickets =  async (spaceId) => {
       );
       let jsonAllTickets = await allTickets.json();
   
-      // if(jsonAllTickets) {
-      //   console.log(jsonAllTickets);
-      //   setTickets(jsonAllTickets.data)
-      // }
+      if(jsonAllTickets) {
+        console.log(jsonAllTickets);
+        setTickets(jsonAllTickets.data)
+      }
   
       return jsonAllTickets.data
 }

@@ -21,18 +21,18 @@ const StyledButton = styled.button`
 `;
 
 export const SpaceDetailPage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const params = useParams();
   const [tickets, setTickets] = useState([]);
   const [space, setSpace] = useState();
   const [showNewTicketForm, setShowNewTicketForm] = useState();
 
-  const fetchTickets = async () => {
-    let fetchedTickets = await getTickets(space?.id);
-    if (fetchedTickets) {
-      setTickets(fetchedTickets);
-    }
-  };
+  // const fetchTickets = () => {
+  //   getTickets(params.space_id, setTickets);
+  //   // if (fetchedTickets) {
+  //   //   setTickets(fetchedTickets);
+  //   // }
+  // };
 
   //  get space info on mount
   useEffect(() => {
@@ -40,7 +40,7 @@ export const SpaceDetailPage = () => {
   }, []);
 
   useEffect(() => {
-    fetchTickets();
+    getTickets(params.space_id, setTickets);
   }, [space]);
 
   return (
@@ -51,7 +51,9 @@ export const SpaceDetailPage = () => {
             <SpaceDetailHeader space={space} />
             {tickets.length > 0 ? (
               <>
-                <SpaceDetailButton onClick={() => navigate(`/${space.id}/videoRoom`)}>
+                <SpaceDetailButton
+                  onClick={() => navigate(`/${space.id}/videoRoom`)}
+                >
                   <BoxArrowInRight style={{ marginRight: "5px" }} />
                   Enter a room
                 </SpaceDetailButton>
@@ -66,7 +68,9 @@ export const SpaceDetailPage = () => {
                     <SpaceBoard
                       tickets={tickets}
                       setShowNewTicketForm={setShowNewTicketForm}
-                      fetchTickets={fetchTickets}
+                      getTickets={getTickets}
+                      setTickets={setTickets}
+                      spaceId={space.id}
                     />
                   </>
                 )}
@@ -78,7 +82,8 @@ export const SpaceDetailPage = () => {
               showNewTicketForm={showNewTicketForm}
               setShowNewTicketForm={setShowNewTicketForm}
               spaceMembers={space.members.map((member) => member.user)}
-              fetchTickets={fetchTickets}
+              getTickets={getTickets}
+              setTickets={setTickets}
               spaceId={space.id}
             />
           </div>

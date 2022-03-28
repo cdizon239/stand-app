@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
+import Controls from "./Controls";
 
-export const Participant = ({ participant }) => {
+export const Participant = ({ participant,   handleAudioToggle,
+  handleVideoToggle,
+  toggleAudio,
+  toggleVideo,
+  isLocal }) => {
   const [videoTracks, setVideoTracks] = useState([]);
   const [audioTracks, setAudioTracks] = useState([]);
 
@@ -62,11 +67,28 @@ export const Participant = ({ participant }) => {
     }
   }, [audioTracks]);
 
+  let icon;
+
+// if (props.trackOff) {
+//   icon = props.type === 'audio' ? faMicrophoneSlash : faVideoSlash;
+// } else {
+//    icon = props.type === 'audio' ? faMicrophone : faVideo;
+// }
+
   return (
     <div className="participant">
       <h3>{participant.identity}</h3>
       <video ref={videoRef} autoPlay={true} />
       <audio ref={audioRef} autoPlay={true} muted={true} />
+      <audio ref={audioRef} autoPlay={true} />
+      {isLocal && (
+        <Controls
+          handleAudioToggle={handleAudioToggle}
+          handleVideoToggle={handleVideoToggle}
+          audio={toggleAudio}
+          video={toggleVideo}
+        />
+      )}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {Participant} from "./Participant";
 
-export const Room = ({ roomName, room, handleLogout }) => {
+export const Room = ({ roomName, room, handleLogout, handleAudioToggle, handleVideoToggle, toggleAudio, toggleVideo }) => {
   const [participants, setParticipants] = useState([]);
 
   useEffect(() => {
@@ -21,22 +21,30 @@ export const Room = ({ roomName, room, handleLogout }) => {
     return () => {
       room.off("participantConnected", participantConnected);
       room.off("participantDisconnected", participantDisconnected);
+
+
     };
   }, [room]);
 
   const remoteParticipants = participants.map((participant) => (
-    <Participant key={participant.sid} participant={participant} />
+    <Participant key={participant.sid} participant={participant} isLocal={false}
+    />
   ));
 
   return (
     <div className="room">
       <h2>Room: {roomName}</h2>
-      <button onClick={handleLogout}>Log out</button>
+      <button onClick={handleLogout}>Leave room</button>
       <div className="local-participant">
         {room ? (
           <Participant
             key={room.localParticipant.sid}
             participant={room.localParticipant}
+            isLocal={true}
+            handleAudioToggle={handleAudioToggle}
+            handleVideoToggle={handleVideoToggle}
+            toggleAudio={toggleAudio}
+            toggleVideo={toggleVideo}
           />
         ) : (
           ""

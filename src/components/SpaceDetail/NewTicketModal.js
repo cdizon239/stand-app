@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Avatar = styled(Image)`
   height: 25px;
+  margin-right: 10px;
 `;
 
 export const NewTicketModal = ({
@@ -81,7 +82,8 @@ export const NewTicketModal = ({
             <Form.Group className="mb-3">
               <Form.Label>Description</Form.Label>
               <Form.Control
-                type="text"
+                as="textarea"
+                rows={3}
                 placeholder="Add a ticket description"
                 name="description"
                 onChange={(e) =>

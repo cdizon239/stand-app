@@ -18,7 +18,7 @@ const SpaceDetailHeader = ({ space }) => {
       <HeaderWrapper>
         <HeaderTitleContainer>
           <h1>{space.name}</h1>
-          <p>Settings</p>
+          <p style={{marginBottom: "0px"}}>Settings</p>
         </HeaderTitleContainer>
         <MemberSectionWrapper>
         <AvatarGroup appearance="stack" data={users} />

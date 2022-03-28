@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from "react";
-import {Participant} from "./Participant";
+import { Participant } from "./Participant";
+import { Row, Col } from "react-bootstrap";
+import styled from "styled-components";
+import Controls from "./Controls";
 
-export const Room = ({ roomName, room, handleLogout, handleAudioToggle, handleVideoToggle, toggleAudio, toggleVideo }) => {
+export const Room = ({
+  roomName,
+  room,
+  handleLogout,
+  handleAudioToggle,
+  handleVideoToggle,
+  toggleAudio,
+  toggleVideo,
+}) => {
   const [participants, setParticipants] = useState([]);
 
   useEffect(() => {
@@ -21,39 +32,70 @@ export const Room = ({ roomName, room, handleLogout, handleAudioToggle, handleVi
     return () => {
       room.off("participantConnected", participantConnected);
       room.off("participantDisconnected", participantDisconnected);
-
-
     };
   }, [room]);
 
   const remoteParticipants = participants.map((participant) => (
-    <Participant key={participant.sid} participant={participant} isLocal={false}
-    />
+    <Col>
+      <Participant
+        key={participant.sid}
+        participant={participant}
+        isLocal={false}
+      />
+    </Col>
   ));
 
   return (
     <div className="room">
-      <h2>Room: {roomName}</h2>
-      <button onClick={handleLogout}>Leave room</button>
-      <div className="local-participant">
-        {room ? (
-          <Participant
-            key={room.localParticipant.sid}
-            participant={room.localParticipant}
-            isLocal={true}
-            handleAudioToggle={handleAudioToggle}
-            handleVideoToggle={handleVideoToggle}
-            toggleAudio={toggleAudio}
-            toggleVideo={toggleVideo}
-          />
-        ) : (
-          ""
-        )}
+      <div
+        style={{
+          padding: "15px 50px",
+          display: "flex",
+          alignItems: "center",
+          position: "fixed",
+          bottom: 0,
+          width: "100%",
+        }}
+      >
+        <h2>Room: {roomName}</h2>
+        <Controls
+          handleAudioToggle={handleAudioToggle}
+          handleVideoToggle={handleVideoToggle}
+          audio={toggleAudio}
+          video={toggleVideo}
+        />
+        <StyledButton onClick={handleLogout}>Leave room</StyledButton>
       </div>
-      <div className="remote-participants">
-      {participants.length > 1 && <h3>Remote Participants</h3>}
+      <Row xs={1} lg={4} style={{display: "flex", justifyContent: "center"}}>
+        <Col>
+          <div className="local-participant">
+            {room ? (
+              <Participant
+                key={room.localParticipant.sid}
+                participant={room.localParticipant}
+                isLocal={true}
+                handleAudioToggle={handleAudioToggle}
+                handleVideoToggle={handleVideoToggle}
+                toggleAudio={toggleAudio}
+                toggleVideo={toggleVideo}
+              />
+            ) : (
+              ""
+            )}
+          </div>
+        </Col>
         {remoteParticipants}
-        </div>
+      </Row>
     </div>
   );
 };
+
+const StyledButton = styled.button`
+  border-radius: 3em;
+  border: none;
+  background: rgba(69, 61, 121, 1);
+  min-height: 50px;
+  color: white;
+  font-weight: 500;
+  padding: 0 20px;
+`;

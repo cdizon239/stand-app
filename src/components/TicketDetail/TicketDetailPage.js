@@ -11,7 +11,7 @@ import {
   TicketDetailPageWrapper,
   TicketArea,
   CommentArea,
-  WriteCommentBox
+  WriteCommentBox,
 } from "./styles";
 
 import CommentBox from "./Comments/CommentBox";
@@ -33,9 +33,8 @@ const TicketDetailPage = () => {
   //    grab ticket on mount
   useEffect(() => {
     getTicket(params.ticket_id, setTicket, setSpaceId, setSpaceMembers);
-    getComments(params.ticket_id, setComments)
+    getComments(params.ticket_id, setComments);
   }, []);
-
 
   useEffect(() => {
     console.log(comments);
@@ -69,13 +68,13 @@ const TicketDetailPage = () => {
           title: title,
           description: description,
           status: status,
-          assignee: assignee.id,
+          assignee: assignee,
         }),
       }
     );
   };
 
-  const handleCommentSubmit = async(e) => {
+  const handleCommentSubmit = async (e) => {
     e.preventDefault();
 
     let newComment = await fetch(
@@ -90,13 +89,13 @@ const TicketDetailPage = () => {
         },
         credentials: "include",
         body: JSON.stringify({
-          detail: comment
+          detail: comment,
         }),
       }
     );
-    setComment('')
-    getComments(ticket.id, setComments)
-  }
+    setComment("");
+    getComments(ticket.id, setComments);
+  };
 
   const statusOptions = [
     { value: "To do", label: "To do" },
@@ -126,11 +125,14 @@ const TicketDetailPage = () => {
     <>
       {ticket && (
         <TicketDetailPageWrapper>
+          <BackNavHeader
+            onClick={() => navigate(-1, { replace: true })}
+          >
+            <ArrowLeft className="fs-2" />
+            <h5 style={{ margin: "0 15px" }}>Back</h5>
+          </BackNavHeader>
           <div>
-            <ArrowLeft className="fs-2" onClick={()=> navigate(-1, {replace: true})}/>
-          </div>
-          <div>
-            <h1>{ticket.title}</h1>
+            <h3>Ticket Details</h3>
           </div>
           <TicketAndCommentsWrapper>
             <TicketArea>
@@ -150,7 +152,7 @@ const TicketDetailPage = () => {
                 <Form.Group className="mb-3">
                   <Form.Label>Description</Form.Label>
                   <Form.Control
-                    type="text"
+                    as="textarea"
                     placeholder="Add a ticket description"
                     name="description"
                     defaultValue={ticket.description}
@@ -205,7 +207,9 @@ const TicketDetailPage = () => {
             </TicketArea>
             <CommentArea>
               <p>Comments</p>
-              {comments?.map((comment) => <CommentBox comment={comment} setComments={setComments}/>)}
+              {comments?.map((comment) => (
+                <CommentBox comment={comment} setComments={setComments} />
+              ))}
               <WriteCommentBox>
                 <Avatar
                   src={localStorage.getItem("loggedInUserAvatar")}
@@ -213,9 +217,19 @@ const TicketDetailPage = () => {
                   roundedCircle
                 />
                 <Form>
-                  <Form.Control as="textarea" rows={3}  name="detail"  value={comment} onChange={(e) => setComment(e.target.value)}/>
-                  <Button variant="secondary" onClick={()=> setComment(null)}>Cancel</Button>
-                  <Button variant="primary" onClick={handleCommentSubmit}>Comment </Button>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    name="detail"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  />
+                  <Button variant="secondary" onClick={() => setComment(null)}>
+                    Cancel
+                  </Button>
+                  <Button variant="primary" onClick={handleCommentSubmit}>
+                    Comment{" "}
+                  </Button>
                 </Form>
               </WriteCommentBox>
             </CommentArea>
@@ -227,3 +241,11 @@ const TicketDetailPage = () => {
 };
 
 export default TicketDetailPage;
+
+const BackNavHeader = styled.div`
+  width: 80vw;
+  padding: 15px 50px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;

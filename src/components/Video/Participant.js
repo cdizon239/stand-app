@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import Controls from "./Controls";
 
-export const Participant = ({ participant,   handleAudioToggle,
+export const Participant = ({
+  participant,
+  handleAudioToggle,
   handleVideoToggle,
   toggleAudio,
   toggleVideo,
-  isLocal }) => {
+  isLocal,
+}) => {
   const [videoTracks, setVideoTracks] = useState([]);
   const [audioTracks, setAudioTracks] = useState([]);
 
@@ -72,27 +75,27 @@ export const Participant = ({ participant,   handleAudioToggle,
 
   let icon;
 
-// if (props.trackOff) {
-//   icon = props.type === 'audio' ? faMicrophoneSlash : faVideoSlash;
-// } else {
-//    icon = props.type === 'audio' ? faMicrophone : faVideo;
-// }
+  // if (props.trackOff) {
+  //   icon = props.type === 'audio' ? faMicrophoneSlash : faVideoSlash;
+  // } else {
+  //    icon = props.type === 'audio' ? faMicrophone : faVideo;
+  // }
 
   return (
-    <div className="participant">
-      <h3>{participant.username}</h3>
-      {isLocal && (
+    <>
+      <div className="participant">
+        <h3>{participant.username}</h3>
+        <video ref={videoRef} autoPlay={true} />
+        <audio ref={audioRef} autoPlay={true} muted={true} />
+      </div>
+      {/* {isLocal && (
         <Controls
           handleAudioToggle={handleAudioToggle}
           handleVideoToggle={handleVideoToggle}
           audio={toggleAudio}
           video={toggleVideo}
         />
-      )}
-      <video ref={videoRef} autoPlay={true} />
-      <audio ref={audioRef} autoPlay={true} muted={true} />
-      <audio ref={audioRef} autoPlay={true} />
-    </div>
+      )} */}
+    </>
   );
 };
-

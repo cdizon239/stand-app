@@ -5,20 +5,10 @@ import SpaceDetailHeader from "./SpaceDetailHeader";
 import SpaceBoard from "./SpaceBoard";
 import { getTickets } from "../../utils/getTickets";
 import { NewTicketModal } from "./NewTicketModal";
-import { PlusCircleFill, BoxArrowInRight } from "react-bootstrap-icons";
-import { VideoChat } from "../Video/VideoChat";
+import { PlusCircleFill, BoxArrowInRight, ArrowLeft } from "react-bootstrap-icons";
 import { SpaceDetailButton } from "./styles";
 import { getSpace } from "../../utils/getSpace";
 
-const StyledButton = styled.button`
-  border-radius: 25px;
-  border: none;
-  background: rgba(69, 61, 121, 1);
-  min-height: 50px;
-  color: white;
-  font-weight: 500;
-  padding: 0 2%;
-`;
 
 export const SpaceDetailPage = () => {
   const navigate = useNavigate();
@@ -48,15 +38,19 @@ export const SpaceDetailPage = () => {
       {space && (
         <div>
           <div>
+            <BackNavHeader onClick={() => navigate(-1, { replace: true })}>
+              <ArrowLeft className="fs-2" />
+              <h5 style={{ margin: "0 15px" }}>Back</h5>
+            </BackNavHeader>
             <SpaceDetailHeader space={space} />
+            <SpaceDetailButton
+              onClick={() => navigate(`/${space.id}/videoRoom`)}
+            >
+              <BoxArrowInRight style={{ marginRight: "5px" }} />
+              Enter a room
+            </SpaceDetailButton>
             {tickets.length > 0 ? (
               <>
-                <SpaceDetailButton
-                  onClick={() => navigate(`/${space.id}/videoRoom`)}
-                >
-                  <BoxArrowInRight style={{ marginRight: "5px" }} />
-                  Enter a room
-                </SpaceDetailButton>
                 {space?.privacy === "private" && (
                   <>
                     <SpaceDetailButton
@@ -95,3 +89,22 @@ export const SpaceDetailPage = () => {
     </>
   );
 };
+
+const BackNavHeader = styled.div`
+  width: 80vw;
+  padding: 15px 50px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const StyledButton = styled.button`
+  border-radius: 25px;
+  border: none;
+  background: rgba(69, 61, 121, 1);
+  min-height: 50px;
+  color: white;
+  font-weight: 500;
+  padding: 0 2%;
+`;
+

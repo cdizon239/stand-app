@@ -4,7 +4,6 @@ import { Nav, Navbar, Container, Image } from "react-bootstrap";
 
 export const NavBar = () => {
   return (
-    <>
       <Navbar collapseOnSelect expand="lg" className="navbar-container">
         <Container>
           <Image src="/standAppLogo.png" className='app-logo'/>
@@ -20,6 +19,5 @@ export const NavBar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </>
   );
 };

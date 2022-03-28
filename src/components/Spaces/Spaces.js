@@ -7,24 +7,6 @@ import { NewSpaceModal } from "./NewSpaceModal";
 import { getSpaces } from "../../utils/getSpaces";
 import { getUsers } from "../../utils/getUsers";
 
-const StyledButton = styled.button`
-  border-radius: 25px;
-  border: none;
-  background: rgba(69, 61, 121, 1);
-  min-height: 50px;
-  color: white;
-  font-weight: 500;
-  padding: 0 2%;
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-`;
-const buttonWrapper = styled.div`
-  position: fixed;
-  bottom: 0;
-  right: 0;
-`;
-
 export const Spaces = () => {
   const [spaces, setSpaces] = useState([]);
   const navigate = useNavigate();
@@ -77,3 +59,22 @@ export const Spaces = () => {
     </>
   );
 };
+
+
+const StyledButton = styled.button`
+  border-radius: 25px;
+  border: none;
+  background: rgba(69, 61, 121, 1);
+  min-height: 50px;
+  color: white;
+  font-weight: 500;
+  padding: 0 2%;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+`;
+const buttonWrapper = styled.div`
+  position: fixed;
+  bottom: 0;
+  right: 0;
+`;

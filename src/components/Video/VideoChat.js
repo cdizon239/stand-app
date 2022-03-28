@@ -6,14 +6,15 @@ import { Room } from "./Room";
 import "./video.css";
 import { ArrowLeft } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 export const VideoChat = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [roomName, setRoomName] = useState("");
   const [room, setRoom] = useState(null);
   const [connecting, setConnecting] = useState(false);
-  const [toggleAudio, setToggleAudio] = useState(true);
+  const [toggleAudio, setToggleAudio] = useState(false);
   const [toggleVideo, setToggleVideo] = useState(true);
 
   const handleUsernameChange = useCallback((event) => {
@@ -125,25 +126,34 @@ export const VideoChat = () => {
     );
   } else {
     render = (
-      <VideoLobby
-        username={username}
-        roomName={roomName}
-        handleUsernameChange={handleUsernameChange}
-        handleRoomNameChange={handleRoomNameChange}
-        handleSubmit={handleSubmit}
-        connecting={connecting}
-      />
+      <>
+        <BackNavHeader
+          onClick={() => {
+            navigate(-1, { replace: true });
+            handleLogout();
+          }}
+        >
+          <ArrowLeft className="fs-2" />
+          <h5 style={{ margin: "0 15px" }}>Back</h5>
+        </BackNavHeader>
+        <VideoLobby
+          username={username}
+          roomName={roomName}
+          handleUsernameChange={handleUsernameChange}
+          handleRoomNameChange={handleRoomNameChange}
+          handleSubmit={handleSubmit}
+          connecting={connecting}
+        />
+      </>
     );
   }
-  return (
-    <>
-      <div>
-        <ArrowLeft
-          className="fs-2"
-          onClick={() => navigate(-1, { replace: true })}
-        />
-      </div>
-      {render}
-    </>
-  );
+  return <>{render}</>;
 };
+
+const BackNavHeader = styled.div`
+  width: 80vw;
+  padding: 30px 50px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;

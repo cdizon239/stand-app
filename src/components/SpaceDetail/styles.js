@@ -31,7 +31,7 @@ export const DraggableTicket = styled.div`
 export const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 1% 5%;
+  padding: 10px 50px;
 `;
 export const HeaderTitleContainer = styled.div`
   display: flex;
@@ -47,5 +47,5 @@ export const SpaceDetailButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 15px auto;
+  margin: 5px auto;
 `;

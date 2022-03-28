@@ -5,9 +5,9 @@ import SpaceDetailHeader from "./SpaceDetailHeader";
 import SpaceBoard from "./SpaceBoard";
 import { getTickets } from "../../utils/getTickets";
 import { NewTicketModal } from "./NewTicketModal";
-import { PlusCircleFill } from "react-bootstrap-icons";
+import { PlusCircleFill, BoxArrowInRight } from "react-bootstrap-icons";
 import { VideoChat } from "../Video/VideoChat";
-import { CreateTicketButton } from "./styles";
+import { SpaceDetailButton } from "./styles";
 import { getSpace } from "../../utils/getSpace";
 
 const StyledButton = styled.button`
@@ -46,30 +46,44 @@ export const SpaceDetailPage = () => {
     <>
       {space && (
         <div>
-          <SpaceDetailHeader space={space} />
-          {tickets.length > 0 ? (
-            <>
-              <CreateTicketButton onClick={() => setShowNewTicketForm(true)}>
-                <PlusCircleFill style={{ marginRight: "5px" }} />
-                Create a ticket
-              </CreateTicketButton>
-              <SpaceBoard
-                tickets={tickets}
-                setShowNewTicketForm={setShowNewTicketForm}
-                fetchTickets={fetchTickets}
-              />
-            </>
-          ) : (
-            <PlusCircleFill onClick={() => setShowNewTicketForm(true)} />
-          )}
-          <NewTicketModal
-            showNewTicketForm={showNewTicketForm}
-            setShowNewTicketForm={setShowNewTicketForm}
-            spaceMembers={space.members.map((member) => member.user)}
-            fetchTickets={fetchTickets}
-            spaceId={space.id}
-          />
-          <VideoChat />
+          <div>
+            <SpaceDetailHeader space={space} />
+            {tickets.length > 0 ? (
+              <>
+                <SpaceDetailButton>
+                  <BoxArrowInRight style={{ marginRight: "5px" }} />
+                  Enter a room
+                </SpaceDetailButton>
+                {space?.privacy === "private" && (
+                  <>
+                    <SpaceDetailButton
+                      onClick={() => setShowNewTicketForm(true)}
+                    >
+                      <PlusCircleFill style={{ marginRight: "5px" }} />
+                      Create a ticket
+                    </SpaceDetailButton>
+                    <SpaceBoard
+                      tickets={tickets}
+                      setShowNewTicketForm={setShowNewTicketForm}
+                      fetchTickets={fetchTickets}
+                    />
+                  </>
+                )}
+              </>
+            ) : (
+              <PlusCircleFill onClick={() => setShowNewTicketForm(true)} />
+            )}
+            <NewTicketModal
+              showNewTicketForm={showNewTicketForm}
+              setShowNewTicketForm={setShowNewTicketForm}
+              spaceMembers={space.members.map((member) => member.user)}
+              fetchTickets={fetchTickets}
+              spaceId={space.id}
+            />
+          </div>
+          <div>
+            <VideoChat />
+          </div>
         </div>
       )}
     </>

@@ -19,13 +19,23 @@ export const DraggableTicket = styled.div`
 `;
 
 export const HeaderWrapper = styled.div`
-display: flex;
-justify-content: space-between;
-padding: 5%;
-`
+  display: flex;
+  justify-content: space-between;
+  padding: 1% 5%;
+`;
 export const HeaderTitleContainer = styled.div`
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+export const MemberSectionWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
+export const CreateTicketButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px auto;
+`;

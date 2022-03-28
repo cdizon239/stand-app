@@ -35,10 +35,6 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
     });
   }, [tickets]);
 
-  useEffect(() => {
-    console.log(columns);
-  }, [columns]);
-
   return (
     <>
       {tickets.length > 0 && (
@@ -64,7 +60,7 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
                           ref={provided.innerRef}
                           style={{
                             background: snapshot.isDraggingOver
-                              ? "lightBlue"
+                              ? "#E0D6FF"
                               : "#F0EFF4",
                             borderRadius: "5px",
                             padding: 4,
@@ -89,7 +85,7 @@ const SpaceBoard = ({ tickets, setShowNewTicketForm, fetchTickets }) => {
                                       style={{
                                         backgroundColor: snapshot.isDragging
                                           ? "#26384a"
-                                          : "#ADB6C4",
+                                          : "#979aaa",
                                         ...provided.draggableProps.style,
                                       }}
                                     >

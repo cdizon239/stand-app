@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "react-bootstrap-icons";
 import { Form, FormGroup, Image, Button } from "react-bootstrap";
 import Select from "react-select";
 import styled from "styled-components";
 import { getTicket } from "../../utils/getTicket";
+import { getComments } from "../../utils/getComments";
 import {
   TicketAndCommentsWrapper,
   TicketDetailPageWrapper,
@@ -20,10 +21,9 @@ const Avatar = styled(Image)`
   margin: 0 15px;
 `;
 
-
-
 const TicketDetailPage = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const [ticket, setTicket] = useState();
   const [spaceMembers, setSpaceMembers] = useState();
   const [spaceId, setSpaceId] = useState();
@@ -33,11 +33,13 @@ const TicketDetailPage = () => {
   //    grab ticket on mount
   useEffect(() => {
     getTicket(params.ticket_id, setTicket, setSpaceId, setSpaceMembers);
+    getComments(params.ticket_id, setComments)
   }, []);
 
+
   useEffect(() => {
-    console.log(comment);
-  }, [comment]);
+    console.log(comments);
+  }, [comments]);
 
   //   form change handlers
   const handleTicketInfoChange = (name, value) => {
@@ -93,7 +95,7 @@ const TicketDetailPage = () => {
       }
     );
     setComment('')
-
+    getComments(ticket.id, setComments)
   }
 
   const statusOptions = [
@@ -125,7 +127,7 @@ const TicketDetailPage = () => {
       {ticket && (
         <TicketDetailPageWrapper>
           <div>
-            <ArrowLeft className="fs-2" />
+            <ArrowLeft className="fs-2" onClick={()=> navigate(-1, {replace: true})}/>
           </div>
           <div>
             <h1>{ticket.title}</h1>
@@ -203,7 +205,7 @@ const TicketDetailPage = () => {
             </TicketArea>
             <CommentArea>
               <p>Comments</p>
-              <CommentBox/>
+              {comments?.map((comment) => <CommentBox comment={comment} setComments={setComments}/>)}
               <WriteCommentBox>
                 <Avatar
                   src={localStorage.getItem("loggedInUserAvatar")}

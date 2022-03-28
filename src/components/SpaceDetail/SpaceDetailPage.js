@@ -7,6 +7,8 @@ import { getTickets } from "../../utils/getTickets";
 import { NewTicketModal } from "./NewTicketModal";
 import { PlusCircleFill } from "react-bootstrap-icons";
 import { VideoChat } from "../Video/VideoChat";
+import { CreateTicketButton } from "./styles";
+import { getSpace } from "../../utils/getSpace";
 
 const StyledButton = styled.button`
   border-radius: 25px;
@@ -24,25 +26,6 @@ export const SpaceDetailPage = () => {
   const [space, setSpace] = useState();
   const [showNewTicketForm, setShowNewTicketForm] = useState();
 
-  const getSpace = async () => {
-    let spaceToFetch = await fetch(
-      process.env.REACT_APP_BACKEND_URL + "/api/v1/spaces/" + params.space_id,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      }
-    );
-    let jsonSpace = await spaceToFetch.json();
-
-    if (jsonSpace) {
-      console.log(jsonSpace.data.members[0].user);
-      setSpace(jsonSpace.data);
-    }
-  };
-
   const fetchTickets = async () => {
     let fetchedTickets = await getTickets(space?.id);
     if (fetchedTickets) {
@@ -50,17 +33,14 @@ export const SpaceDetailPage = () => {
     }
   };
 
+  //  get space info on mount
   useEffect(() => {
-    getSpace();
+    getSpace(params.space_id, setSpace);
   }, []);
 
   useEffect(() => {
     fetchTickets();
   }, [space]);
-
-  useEffect(() => {
-    console.log(tickets);
-  }, [tickets]);
 
   return (
     <>
@@ -69,10 +49,10 @@ export const SpaceDetailPage = () => {
           <SpaceDetailHeader space={space} />
           {tickets.length > 0 ? (
             <>
-              <div onClick={() => setShowNewTicketForm(true)} >
-                <PlusCircleFill/>
-                <p>Create a ticket</p>
-              </div>
+              <CreateTicketButton onClick={() => setShowNewTicketForm(true)}>
+                <PlusCircleFill style={{ marginRight: "5px" }} />
+                Create a ticket
+              </CreateTicketButton>
               <SpaceBoard
                 tickets={tickets}
                 setShowNewTicketForm={setShowNewTicketForm}

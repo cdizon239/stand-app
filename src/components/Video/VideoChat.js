@@ -73,8 +73,10 @@ export const VideoChat = () => {
   const handleAudioToggle = () => {
     room.localParticipant.audioTracks.forEach((track) => {
       if (track.track.isEnabled) {
+        console.log('disable audio');
         track.track.disable();
       } else {
+        console.log('enable audio');
         track.track.enable();
       }
       setToggleAudio(track.track.isEnabled);

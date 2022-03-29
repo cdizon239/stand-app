@@ -73,20 +73,13 @@ export const Participant = ({
     }
   }, [audioTracks]);
 
-  let icon;
-
-  // if (props.trackOff) {
-  //   icon = props.type === 'audio' ? faMicrophoneSlash : faVideoSlash;
-  // } else {
-  //    icon = props.type === 'audio' ? faMicrophone : faVideo;
-  // }
 
   return (
     <>
       <div className="participant">
         <h3>{participant.username}</h3>
         <video ref={videoRef} autoPlay={true} />
-        <audio ref={audioRef} autoPlay={true} muted={true} />
+        <audio ref={audioRef} autoPlay={true} />
       </div>
       {/* {isLocal && (
         <Controls

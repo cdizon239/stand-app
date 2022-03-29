@@ -40,6 +40,10 @@ const TicketDetailPage = () => {
     console.log(comments);
   }, [comments]);
 
+  useEffect(() => {
+    getComments(params.ticket_id, setComments);
+  }, [ticket])
+
   //   form change handlers
   const handleTicketInfoChange = (name, value) => {
     setTicket({

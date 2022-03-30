@@ -73,7 +73,7 @@ const SpaceBoard = ({
                             minHeight: "90vh",
                           }}
                         >
-                          {column.items.map((item, index) => {
+                          {column.items?.map((item, index) => {
                             console.log(item);
                             return (
                               <Draggable

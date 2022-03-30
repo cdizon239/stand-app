@@ -42,7 +42,7 @@ const TicketDetailPage = () => {
 
   useEffect(() => {
     getComments(params.ticket_id, setComments);
-  }, [ticket])
+  }, [ticket]);
 
   //   form change handlers
   const handleTicketInfoChange = (name, value) => {
@@ -129,20 +129,21 @@ const TicketDetailPage = () => {
     <>
       {ticket && (
         <TicketDetailPageWrapper>
-          <BackNavHeader
-            onClick={() => navigate(-1, { replace: true })}
-          >
+          <BackNavHeader onClick={() => navigate(-1, { replace: true })}>
             <ArrowLeft className="fs-2" />
             <h5 style={{ margin: "0 15px" }}>Back</h5>
           </BackNavHeader>
-          <div>
+          {/* <div>
             <h3>Ticket Details</h3>
-          </div>
+          </div> */}
           <TicketAndCommentsWrapper>
             <TicketArea>
+              <div>
+                <h5>Ticket Details</h5>
+              </div>
               <Form>
                 <Form.Group className="mb-3">
-                  <Form.Label>Ticket</Form.Label>
+                  <Form.Label bsPrefix="form-label">Ticket</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Write the ticket"
@@ -154,7 +155,7 @@ const TicketDetailPage = () => {
                   />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label>Description</Form.Label>
+                  <Form.Label bsPrefix="form-label">Description</Form.Label>
                   <Form.Control
                     as="textarea"
                     placeholder="Add a ticket description"
@@ -165,8 +166,8 @@ const TicketDetailPage = () => {
                     }
                   />
                 </Form.Group>
-                <FormGroup>
-                  <Form.Label>Ticket Status</Form.Label>
+                <FormGroup className="mb-3">
+                  <Form.Label bsPrefix="form-label">Ticket Status</Form.Label>
                   <Select
                     options={statusOptions}
                     name="status"
@@ -180,8 +181,8 @@ const TicketDetailPage = () => {
                   />
                 </FormGroup>
                 {spaceMembers && (
-                  <FormGroup>
-                    <Form.Label>Assignee</Form.Label>
+                  <FormGroup className="mb-3">
+                    <Form.Label bsPrefix="form-label">Assignee</Form.Label>
                     <Select
                       options={membersDropdown}
                       name="assignee"
@@ -205,9 +206,9 @@ const TicketDetailPage = () => {
                   </FormGroup>
                 )}
               </Form>
-              <Button variant="primary" onClick={handleTicketUpdateSubmit}>
-                Save
-              </Button>
+              <StyledButton onClick={handleTicketUpdateSubmit}>
+                Update Ticket
+              </StyledButton>
             </TicketArea>
             <CommentArea>
               <p>Comments</p>
@@ -252,4 +253,14 @@ const BackNavHeader = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+`;
+
+const StyledButton = styled.button`
+  border-radius: 3em;
+  border: none;
+  background: rgba(69, 61, 121, 1);
+  min-height: 50px;
+  color: white;
+  font-weight: 500;
+  padding: 0 20px;
 `;

@@ -5,6 +5,7 @@
   font-family: Poppins, sans-serif;
   /* background-color: #DDCAD9; */
   background-color: #ECE6EB;
+  min-height: 100vw;
 }
 
 .App-logo {

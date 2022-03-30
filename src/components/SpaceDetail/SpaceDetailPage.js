@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap-icons";
 import { SpaceDetailButton } from "./styles";
 import { getSpace } from "../../utils/getSpace";
-import './SpaceDetailPage.css'
+import "./SpaceDetailPage.css";
 
 export const SpaceDetailPage = () => {
   const navigate = useNavigate();
@@ -69,7 +69,11 @@ export const SpaceDetailPage = () => {
                 )}
               </>
             ) : (
-              <PlusCircleFill onClick={() => setShowNewTicketForm(true)} />
+              <div>
+                <PlusCircleFill onClick={() => setShowNewTicketForm(true)} className="fs-2"/>
+                <h3>No tickets on this Space board yet</h3>
+                <h5>Create a ticket and get started</h5>
+              </div>
             )}
             <NewTicketModal
               showNewTicketForm={showNewTicketForm}

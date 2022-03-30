@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import AvatarGroup from '@atlaskit/avatar-group';
 import {HeaderWrapper, HeaderTitleContainer, MemberSectionWrapper} from './styles'
-import { PlusCircleFill, GearFill } from "react-bootstrap-icons";
+import { PlusCircleFill, GearFill, PersonPlusFill } from "react-bootstrap-icons";
 
 const SpaceDetailHeader = ({ space }) => {
     let members = space.members
@@ -10,7 +10,8 @@ const SpaceDetailHeader = ({ space }) => {
         key: member.user.email,
         name: member.user.name,
         href: '#',
-        src:member.user.img_url
+        src:member.user.img_url,
+        onClick: () => {console.log(member.user.name)}
     }))    
 
   return (
@@ -22,7 +23,7 @@ const SpaceDetailHeader = ({ space }) => {
         </HeaderTitleContainer>
         <MemberSectionWrapper>
         <AvatarGroup appearance="stack" data={users} />
-        <PlusCircleFill className="fs-2"/>
+        <PersonPlusFill className="fs-2"/>
         </MemberSectionWrapper>
       </HeaderWrapper>
     </>

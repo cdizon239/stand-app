@@ -66,26 +66,31 @@ export const Room = ({
         />
         <StyledButton onClick={handleLogout}>Leave room</StyledButton>
       </div>
-      <Row xs={1} lg={4} style={{display: "flex", justifyContent: "center"}}>
-        <Col>
-          <div className="local-participant">
-            {room ? (
-              <Participant
-                key={room.localParticipant.sid}
-                participant={room.localParticipant}
-                isLocal={true}
-                handleAudioToggle={handleAudioToggle}
-                handleVideoToggle={handleVideoToggle}
-                toggleAudio={toggleAudio}
-                toggleVideo={toggleVideo}
-              />
-            ) : (
-              ""
-            )}
-          </div>
-        </Col>
-        {remoteParticipants}
-      </Row>
+
+        <Row
+          xs={1}
+          lg={4}
+          style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "auto" }}
+        >
+          <Col>
+            <div className="local-participant">
+              {room ? (
+                <Participant
+                  key={room.localParticipant.sid}
+                  participant={room.localParticipant}
+                  isLocal={true}
+                  handleAudioToggle={handleAudioToggle}
+                  handleVideoToggle={handleVideoToggle}
+                  toggleAudio={toggleAudio}
+                  toggleVideo={toggleVideo}
+                />
+              ) : (
+                ""
+              )}
+            </div>
+          </Col>
+          {remoteParticipants}
+        </Row>
     </div>
   );
 };

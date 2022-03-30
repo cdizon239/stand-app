@@ -2,6 +2,7 @@ import styled from "styled-components";
 export const TicketDetailPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
 `;
 
 export const TicketAndCommentsWrapper = styled.div`
@@ -14,6 +15,7 @@ export const TicketAndCommentsWrapper = styled.div`
 export const TicketArea = styled.div`
 width: 70%;
 box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
+background: #FDFFFC;
 padding: 15px;
 border-radius: 10px;
 `

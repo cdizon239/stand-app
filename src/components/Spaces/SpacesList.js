@@ -18,7 +18,7 @@ export const SpacesList = ({ spaces }) => {
                 <Card className="card-container">
                   <Card.Img
                     variant="top"
-                    src={`/images/${1}.png`}
+                    src={`/images/${Math.floor(Math.random() * 8) + 1}.png`}
                     className="card-image"
                     bsPrefix="img"
                   />

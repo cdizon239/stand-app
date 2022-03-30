@@ -1,8 +1,28 @@
 import React from "react";
 import "./NavBar.css";
 import { Nav, Navbar, Container, Image } from "react-bootstrap";
+import { BoxArrowRight } from "react-bootstrap-icons";
+import { useNavigate } from "react-router-dom";
 
 export const NavBar = () => {
+  const navigate = useNavigate('/login')
+
+  const handleLogout = async () => {
+    await fetch(
+      process.env.REACT_APP_BACKEND_URL + "/api/v1/users/logout",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+
+    navigate('/login')
+
+  }
+
   return (
       <Navbar collapseOnSelect expand="lg" className="navbar-container">
         <Container>
@@ -17,6 +37,9 @@ export const NavBar = () => {
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
+          <div onClick={handleLogout}>
+          <BoxArrowRight className="fs-4"/> Logout
+          </div>          
         </Container>
       </Navbar>
   );

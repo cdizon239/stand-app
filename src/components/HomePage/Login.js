@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
 import { useNavigate } from "react-router-dom";
+import { Image } from "react-bootstrap";
+import './Login.css'
 
 const clientId = process.env.REACT_APP_GCLIENT_ID;
 
@@ -9,14 +11,15 @@ const Login = () => {
   const onSuccess = async (res) => {
     console.log(res.profileObj);
     const id_token = res.getAuthResponse().id_token;
-    console.log(id_token);
+    console.log(res.getAuthResponse());
     let login = await fetch(process.env.REACT_APP_BACKEND_URL + '/api/v1/users/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            id_token: id_token
+            id_token: id_token,
+            email: res.profileObj.email
         }),
         credentials: 'include'
     })
@@ -39,8 +42,11 @@ const Login = () => {
 
   return (
     <div>
-      <div className="LoginWrapper">
+      <div className="login-wrapper">
+        <Image src="/standAppLogo.svg" className="App-logo" style={{width: "60vh"}}/>
+        <h1>StandUp</h1>
         <GoogleLogin
+          className="login-button"
           clientId={clientId}
           buttonText="Login with your Google account"
           onSuccess={onSuccess}

@@ -35,8 +35,8 @@ export const HeaderWrapper = styled.div`
 `;
 export const HeaderTitleContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
 `;
 export const MemberSectionWrapper = styled.div`
   display: flex;
@@ -47,5 +47,13 @@ export const SpaceDetailButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 5px auto;
+  border-radius: 25px;
+  border: none;
+  margin-left: 10px;
+  background: rgba(69, 61, 121, 1);
+  min-height: 50px;
+  color: white;
+  font-weight: 500;
+  padding: 0 2%;
+  max-width: 200px
 `;

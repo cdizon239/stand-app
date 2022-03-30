@@ -61,6 +61,7 @@ const StyledCard = styled.div`
   width: 60%;
   height: 50%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  background: #FDFFFC;
   padding: 15px;
   border-radius: 10px;
   display: flex;

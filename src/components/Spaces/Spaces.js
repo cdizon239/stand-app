@@ -33,14 +33,14 @@ export const Spaces = () => {
         setUsers(allUsers.data);
       }
     };
-    fetchUsers()
+    fetchUsers();
   }, []);
 
   return (
-    <>
-      <div className="">
+    <SpacesPageWrapper>
+      <AllSpacesHeaderWrapper>
         <h1>Spaces</h1>
-      </div>
+      </AllSpacesHeaderWrapper>
       <div className="spaces-list-wrapper">
         {spaces && <SpacesList spaces={spaces} />}
       </div>
@@ -56,11 +56,13 @@ export const Spaces = () => {
       <StyledButton onClick={handleShowNewSpaceForm}>
         Create a Space
       </StyledButton>
-    </>
+    </SpacesPageWrapper>
   );
 };
 
-
+const SpacesPageWrapper = styled.div`
+  padding-bottom: 100px;
+`;
 const StyledButton = styled.button`
   border-radius: 25px;
   border: none;
@@ -77,4 +79,8 @@ const buttonWrapper = styled.div`
   position: fixed;
   bottom: 0;
   right: 0;
+`;
+
+const AllSpacesHeaderWrapper = styled.div`
+  padding: 15px 50px;
 `;

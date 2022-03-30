@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 const Avatar = styled(Image)`
   height: 25px;
+  margin-right: 10px;
 `;
 
 export const NewSpaceModal = ({
@@ -75,7 +76,6 @@ export const NewSpaceModal = ({
     };
   });
 
-
   //    handle create space button: make a request to create a space
   return (
     <>
@@ -83,7 +83,11 @@ export const NewSpaceModal = ({
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
           <h3> Create a new space</h3>
-          You will be an owner of this new space... Lorem ipsum dolo i met
+          <p>
+            Space members have the ability to create, edit, and delete tickets
+            to the space board. Space members could also add new members into
+            the space
+          </p>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Space Name</Form.Label>
@@ -96,7 +100,7 @@ export const NewSpaceModal = ({
                 }
               />
             </Form.Group>
-            <FormGroup>
+            <FormGroup className="mb-3" >
               <Form.Label>Space Privacy</Form.Label>
               <Select
                 options={privacyOptions}
@@ -104,9 +108,10 @@ export const NewSpaceModal = ({
                 onChange={(target, action) => {
                   handleFormChange(action.name, target.value);
                 }}
+                placeholder="Please select a space privacy setting"
               />
             </FormGroup>
-            <FormGroup>
+            <FormGroup className="mb-3" >
               <Form.Label>Space Members</Form.Label>
               <Select
                 options={usersDropdown}
@@ -123,11 +128,22 @@ export const NewSpaceModal = ({
               />
             </FormGroup>
           </Form>
-          <Button variant="primary" onClick={handleFormSubmit}>
-            Create Space
-          </Button>
+          <div style={{width: "100%", display: "flex"}} >
+            <StyledButton onClick={handleFormSubmit}>Create Space</StyledButton>
+          </div>
         </Modal.Body>
       </Modal>
     </>
   );
 };
+
+const StyledButton = styled.button`
+  border-radius: 25px;
+  border: none;
+  background: rgba(69, 61, 121, 1);
+  min-height: 50px;
+  color: white;
+  font-weight: 500;
+  padding: 0 2em;
+  margin: 1em auto;
+`;

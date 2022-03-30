@@ -27,7 +27,7 @@ export const SpacesList = ({ spaces }) => {
                       <Card.Title>#{space.name}</Card.Title>
                       <Card.Text>{space.privacy} space</Card.Text>
                     </div>
-                    <Button className="card-button">Enter</Button>
+                    <Button variant="secondary" className="card-button">Enter</Button>
                   </Card.Body>
                 </Card>
               </NavLink>

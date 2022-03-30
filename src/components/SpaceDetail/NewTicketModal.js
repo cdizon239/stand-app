@@ -65,10 +65,10 @@ export const NewTicketModal = ({
       <Modal show={showNewTicketForm} onHide={handleClose} centered>
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
-          <h3> New ticket</h3>
+          <h3> Create a new ticket</h3>
           <Form>
             <Form.Group className="mb-3">
-              <Form.Label>Ticket</Form.Label>
+              <Form.Label>Ticket name</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Write the ticket"
@@ -91,7 +91,7 @@ export const NewTicketModal = ({
                 }
               />
             </Form.Group>
-            <FormGroup>
+            <FormGroup className="mb-3" >
               <Form.Label>Ticket Status</Form.Label>
               <Select
                 options={statusOptions}
@@ -102,7 +102,7 @@ export const NewTicketModal = ({
                 required
               />
             </FormGroup>
-            <FormGroup>
+            <FormGroup className="mb-3" >
               <Form.Label>Assignee</Form.Label>
               <Select
                 options={membersDropdown}
@@ -113,11 +113,22 @@ export const NewTicketModal = ({
               />
             </FormGroup>
           </Form>
-          <Button variant="primary" onClick={handleFormSubmit}>
-            Create Ticket
-          </Button>
+          <div style={{width: "100%", display: "flex"}} >
+            <StyledButton onClick={handleFormSubmit}>Create Ticket</StyledButton>
+          </div>
         </Modal.Body>
       </Modal>
     </>
   );
 };
+
+const StyledButton = styled.button`
+  border-radius: 25px;
+  border: none;
+  background: rgba(69, 61, 121, 1);
+  min-height: 50px;
+  color: white;
+  font-weight: 500;
+  padding: 0 2em;
+  margin: 1em auto;
+`;

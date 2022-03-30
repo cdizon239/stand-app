@@ -10,7 +10,7 @@ import TicketDetailPage from "./components/TicketDetail/TicketDetailPage";
 
 function App() {
   return (
-    <AppLayout>
+    <AppLayout className='App'>
       <Routes>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/all_spaces" element={<Spaces />}></Route>

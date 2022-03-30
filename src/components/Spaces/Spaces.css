@@ -10,17 +10,17 @@
 }
 
 .spaces-list-wrapper {
-    margin: 5%;
+    margin: 0 2em;
 }
 
 .card-button {
     height: 40px;
-    background-color: #00577d!important;
-    border: none;
+    background-color: #979aaa!important;
+    border-color: none!important;
 }
 
 .card-container:hover {
-    transform: scale(1.05);
+    transform: scale(1.025);
 }
 .nav-link {
     text-decoration: none;

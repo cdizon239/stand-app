@@ -23,10 +23,11 @@ export const NewTicketModal = ({
   const handleClose = () => setShowNewTicketForm(false);
   
   const handleFormChange = (name, value) => {
-    setTicketInfo({
-      ...ticketInfo,
+    //  change to a callback format
+    setTicketInfo((prevState) => ({
+      ...prevState,
       [name]: value,
-    });
+    }))
   };
 
   const handleFormSubmit = async (e) => {

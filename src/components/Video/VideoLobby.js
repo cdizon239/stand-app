@@ -9,7 +9,10 @@ export const VideoLobby = ({
   handleSubmit,
 }) => {
   return (
-    <div style={{ height: "100vh", display: "flex", justifyContent: "center" }}>
+    <div style={{ height: "100vh", display: "flex", justifyContent: "space-between", margin: "0 50px" }}>
+      <div>
+        List of active rooms
+      </div>
       <StyledCard className="card-video">
         <form
           onSubmit={handleSubmit}

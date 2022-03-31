@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 export const SpacesList = ({ spaces }) => {
   return (
     <>
-      <Row xs={1} md={3} className="g-4">
+      <Row xs={1} md={3} lg={4} className="g-4">
         {spaces.map((space) => {
           return (
             <Col key={space.id}>

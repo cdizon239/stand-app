@@ -6,8 +6,8 @@
     font-weight: bold;
 }
 .navbar-container {
-    background: rgb(255,224,224);
-    background: linear-gradient(90deg, rgba(255,224,224,1) 0%, rgba(255,199,233,1) 18%, rgba(255,102,195,1) 50%, rgba(255,224,224,1) 96%)!important;
+    background: rgb(255,199,233,1);
+    /* background: linear-gradient(90deg, rgba(255,224,224,1) 0%, rgba(255,199,233,1) 50%, rgba(255,224,224,1) 96%)!important; */
     position: sticky!important;
     top: 0;
     width: 100%;

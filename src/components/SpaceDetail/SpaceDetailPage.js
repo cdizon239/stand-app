@@ -7,7 +7,7 @@ import { getTickets } from "../../utils/getTickets";
 import { NewTicketModal } from "./NewTicketModal";
 import {
   PlusCircleFill,
-  BoxArrowInRight,
+  DoorClosedFill,
   ArrowLeft,
 } from "react-bootstrap-icons";
 import { SpaceDetailButton } from "./styles";
@@ -48,7 +48,7 @@ export const SpaceDetailPage = () => {
                 <SpaceDetailButton
                   onClick={() => navigate(`/${space.id}/videoRoom`)}
                 >
-                  <BoxArrowInRight style={{ marginRight: "5px" }} />
+                  <DoorClosedFill style={{ marginRight: "5px" }} />
                   Enter a room
                 </SpaceDetailButton>
               </div>

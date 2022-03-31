@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {Image} from 'react-bootstrap'
 
 export const Board = styled.div`
   display: flex;
@@ -56,4 +57,20 @@ export const SpaceDetailButton = styled.div`
   font-weight: 500;
   padding: 0 2%;
   max-width: 200px
+`;
+
+export const FormButton = styled.button`
+  border-radius: 25px;
+  border: none;
+  background: rgba(69, 61, 121, 1);
+  min-height: 50px;
+  color: white;
+  font-weight: 500;
+  padding: 0 2em;
+  margin: 1em auto;
+`;
+
+export const Avatar = styled(Image)`
+  height: 25px;
+  margin-right: 10px;
 `;

@@ -10,18 +10,21 @@ import { getUsers } from "../../utils/getUsers";
 export const Spaces = () => {
   const [spaces, setSpaces] = useState([]);
   const navigate = useNavigate();
-  const [showNewSpaceForm, setShowNewSpaceForm] = useState();
-  const [users, setUsers] = useState([]);
+  const [showNewSpaceForm, setShowNewSpaceForm] = useState(false);
+  const [users, setUsers] = useState();
 
-  const handleShowNewSpaceForm = () => setShowNewSpaceForm(true);
+  const handleShowNewSpaceForm = () => {
+    setShowNewSpaceForm(true);
+  };
 
   //  on mount, grab all spaces
   useEffect(() => {
     let fetchSpaces = async () => {
-      let allSpaces = await getSpaces(setSpaces);
-      if (allSpaces.status === 302) navigate("/login");
+      let spacesFetched = await getSpaces();
+      if (spacesFetched) {
+        setSpaces(spacesFetched);
+      }
     };
-
     fetchSpaces();
   }, []);
 
@@ -29,34 +32,37 @@ export const Spaces = () => {
     let fetchUsers = async () => {
       let allUsers = await getUsers();
       if (allUsers) {
-        console.log(allUsers);
-        setUsers(allUsers.data);
+        setUsers(allUsers);
       }
     };
     fetchUsers();
   }, []);
 
   return (
-    <SpacesPageWrapper>
-      <AllSpacesHeaderWrapper>
-        <h1>Spaces</h1>
-      </AllSpacesHeaderWrapper>
-      <div className="spaces-list-wrapper">
-        {spaces && <SpacesList spaces={spaces} />}
-      </div>
-      {users && (
-        <NewSpaceModal
-          showNewSpaceForm={showNewSpaceForm}
-          setShowNewSpaceForm={setShowNewSpaceForm}
-          usersInfo={users}
-          getSpaces={getSpaces}
-          setSpaces={setSpaces}
-        />
+    <>
+      {spaces && (
+        <SpacesPageWrapper>
+          <AllSpacesHeaderWrapper>
+            <h1>Spaces</h1>
+          </AllSpacesHeaderWrapper>
+          <div className="spaces-list-wrapper">
+            {spaces && <SpacesList spaces={spaces} />}
+          </div>
+          {users && (
+            <NewSpaceModal
+              showNewSpaceForm={showNewSpaceForm}
+              setShowNewSpaceForm={setShowNewSpaceForm}
+              usersInfo={users}
+              // getSpaces={getSpaces}
+              setSpaces={setSpaces}
+            />
+          )}
+          <StyledButton onClick={handleShowNewSpaceForm}>
+            Create a Space
+          </StyledButton>
+        </SpacesPageWrapper>
       )}
-      <StyledButton onClick={handleShowNewSpaceForm}>
-        Create a Space
-      </StyledButton>
-    </SpacesPageWrapper>
+    </>
   );
 };
 

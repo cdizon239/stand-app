@@ -11,7 +11,6 @@ const Login = () => {
   const onSuccess = async (res) => {
     console.log(res.profileObj);
     const id_token = res.getAuthResponse().id_token;
-    console.log(res.getAuthResponse());
     let login = await fetch(process.env.REACT_APP_BACKEND_URL + '/api/v1/users/login', {
         method: 'POST',
         headers: {

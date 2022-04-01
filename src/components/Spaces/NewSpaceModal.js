@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Modal, Button, Form, FormGroup, Image } from "react-bootstrap";
-import { createSpace } from "../../utils/createSpace";
+import { Modal, Form, FormGroup, Image } from "react-bootstrap";
+import { getSpaces } from "../../utils/getSpaces";
 import Select from "react-select";
 import styled from "styled-components";
 
@@ -13,7 +13,6 @@ export const NewSpaceModal = ({
   showNewSpaceForm,
   setShowNewSpaceForm,
   usersInfo,
-  getSpaces,
   setSpaces,
 }) => {
   const [spaceInfo, setSpaceInfo] = useState({

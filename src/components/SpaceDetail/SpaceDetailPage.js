@@ -101,7 +101,6 @@ export const SpaceDetailPage = () => {
               showNewTicketForm={showNewTicketForm}
               setShowNewTicketForm={setShowNewTicketForm}
               spaceMembers={space.members.map((member) => member.user)}
-              // getTickets={getTickets}
               setTickets={setTickets}
               spaceId={space.id}
             />

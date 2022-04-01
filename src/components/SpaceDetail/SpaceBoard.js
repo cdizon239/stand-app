@@ -103,7 +103,7 @@ const SpaceBoard = ({
                                           spaceId={spaceId}
                                         />
                                         <Avatar
-                                          src={item.assignee.img_url}
+                                          src={item.assignee?.img_url}
                                           referrerPolicy="no-referrer"
                                           roundedCircle
                                         />

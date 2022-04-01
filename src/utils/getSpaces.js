@@ -11,10 +11,6 @@ export const getSpaces = async (setSpaces) => {
       }
     );
     let jsonAllSpaces = await allSpaces.json();
-
-    // if(jsonAllSpaces) {
-    //   console.log(jsonAllSpaces);
-    //   setSpaces(jsonAllSpaces.data)
-    // }
+    
     return jsonAllSpaces.data
   };

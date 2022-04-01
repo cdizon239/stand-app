@@ -3,6 +3,7 @@ import { Modal, Form, FormGroup, Image } from "react-bootstrap";
 import { getSpaces } from "../../utils/getSpaces";
 import Select from "react-select";
 import styled from "styled-components";
+import { createSpace } from "../../utils/createSpace";
 
 const Avatar = styled(Image)`
   height: 25px;
@@ -17,9 +18,16 @@ export const NewSpaceModal = ({
 }) => {
   const [spaceInfo, setSpaceInfo] = useState({
     name: "",
-    privacy: "",
     members: [],
   });
+  const [formErrors, setFormErrors] = useState();
+
+  const requiredFieldsCheck = () => {
+    let newErrors = {};
+    if (spaceInfo["name"] || spaceInfo["name"] === "")
+      newErrors["name"] = "Space name cannot be empty.";
+    return newErrors;
+  };
 
   const handleClose = () => setShowNewSpaceForm(false);
 
@@ -33,31 +41,21 @@ export const NewSpaceModal = ({
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log(spaceInfo);
-    const { name, privacy, members } = spaceInfo;
-    let createSpace = await fetch(
-      process.env.REACT_APP_BACKEND_URL + "/api/v1/spaces/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          name: name,
-          privacy: privacy,
-          members: members,
-        }),
-      }
-    );
-    let createdSpace = await createSpace.json();
-    getSpaces(setSpaces);
-    setShowNewSpaceForm(false);
-  };
 
-  const privacyOptions = [
-    { value: "private", label: "Private" },
-    { value: "public", label: "Public" },
-  ];
+    //  check if space name exists
+    const spaceFormErrors = requiredFieldsCheck();
+
+    if (Object.keys(spaceFormErrors).length > 0) {
+      setFormErrors(spaceFormErrors);
+    } else {
+      let createdSpace = await createSpace(spaceInfo);
+      let spacesFetched = await getSpaces();
+      if (spacesFetched) {
+        setSpaces(spacesFetched);
+      }
+      setShowNewSpaceForm(false);
+    }
+  };
 
   const usersDropdown = usersInfo.map((user) => {
     return {
@@ -97,20 +95,13 @@ export const NewSpaceModal = ({
                 onChange={(e) =>
                   handleFormChange(e.target.name, e.target.value)
                 }
+                isInvalid={!!formErrors?.name}
               />
+              <Form.Control.Feedback type="invalid">
+                {formErrors?.name}
+              </Form.Control.Feedback>
             </Form.Group>
-            {/* <FormGroup className="mb-3" >
-              <Form.Label>Space Privacy</Form.Label>
-              <Select
-                options={privacyOptions}
-                name="privacy"
-                onChange={(target, action) => {
-                  handleFormChange(action.name, target.value);
-                }}
-                placeholder="Please select a space privacy setting"
-              />
-            </FormGroup> */}
-            <FormGroup className="mb-3" >
+            <FormGroup className="mb-3">
               <Form.Label>Space Members</Form.Label>
               <Select
                 options={usersDropdown}
@@ -127,7 +118,7 @@ export const NewSpaceModal = ({
               />
             </FormGroup>
           </Form>
-          <div style={{width: "100%", display: "flex"}} >
+          <div style={{ width: "100%", display: "flex" }}>
             <StyledButton onClick={handleFormSubmit}>Create Space</StyledButton>
           </div>
         </Modal.Body>

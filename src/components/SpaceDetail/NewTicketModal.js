@@ -6,11 +6,6 @@ import Select from "react-select";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-const Avatar = styled(Image)`
-  height: 25px;
-  margin-right: 10px;
-`;
-
 export const NewTicketModal = ({
   showNewTicketForm,
   setShowNewTicketForm,
@@ -18,25 +13,47 @@ export const NewTicketModal = ({
   setTickets,
   spaceId,
 }) => {
-  const navigate = useNavigate()
-  const [ticketInfo, setTicketInfo] = useState();
+  const navigate = useNavigate();
+  const [ticketInfo, setTicketInfo] = useState({
+    status: 'To do'
+  });
+  const [formErrors, setFormErrors] = useState();
+
+  const requiredFieldsCheck = () => {
+    let newErrors = {};
+    if (!ticketInfo["title"] || ticketInfo["title"] === "")
+      newErrors["title"] = "Ticket name cannot be empty.";
+    return newErrors;
+  };
+
   const handleClose = () => setShowNewTicketForm(false);
-  
+
   const handleFormChange = (name, value) => {
     //  change to a callback format
     setTicketInfo((prevState) => ({
       ...prevState,
       [name]: value,
-    }))
+    }));
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    let createdTicket = await createTicket(spaceId, ticketInfo, setShowNewTicketForm);
-    let ticketsFetched = await getTickets(spaceId)
-    if (ticketsFetched) {
-      setTickets(ticketsFetched)
-      navigate(`/space/${spaceId}`)
+
+    const ticketFormErrors = requiredFieldsCheck();
+
+    if (Object.keys(ticketFormErrors).length > 0) {
+      setFormErrors(ticketFormErrors);
+    } else {
+      let createdTicket = await createTicket(
+        spaceId,
+        ticketInfo,
+        setShowNewTicketForm
+      );
+      let ticketsFetched = await getTickets(spaceId);
+      if (ticketsFetched) {
+        setTickets(ticketsFetched);
+        navigate(`/space/${spaceId}`);
+      }
     }
   };
 
@@ -80,8 +97,11 @@ export const NewTicketModal = ({
                 onChange={(e) =>
                   handleFormChange(e.target.name, e.target.value)
                 }
-                required
+                isInvalid={!!formErrors?.title}
               />
+              <Form.Control.Feedback type='invalid'>
+                {formErrors?.title}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Description</Form.Label>
@@ -95,7 +115,7 @@ export const NewTicketModal = ({
                 }
               />
             </Form.Group>
-            <FormGroup className="mb-3" >
+            <FormGroup className="mb-3">
               <Form.Label>Ticket Status</Form.Label>
               <Select
                 options={statusOptions}
@@ -103,10 +123,11 @@ export const NewTicketModal = ({
                 onChange={(target, action) => {
                   handleFormChange(action.name, target.value);
                 }}
+                defaultValue={ { value: "To do", label: "To do" }}
                 required
               />
             </FormGroup>
-            <FormGroup className="mb-3" >
+            <FormGroup className="mb-3">
               <Form.Label>Assignee</Form.Label>
               <Select
                 options={membersDropdown}
@@ -117,8 +138,10 @@ export const NewTicketModal = ({
               />
             </FormGroup>
           </Form>
-          <div style={{width: "100%", display: "flex"}} >
-            <StyledButton onClick={handleFormSubmit}>Create Ticket</StyledButton>
+          <div style={{ width: "100%", display: "flex" }}>
+            <StyledButton onClick={handleFormSubmit}>
+              Create Ticket
+            </StyledButton>
           </div>
         </Modal.Body>
       </Modal>
@@ -135,4 +158,9 @@ const StyledButton = styled.button`
   font-weight: 500;
   padding: 0 2em;
   margin: 1em auto;
+`;
+
+const Avatar = styled(Image)`
+  height: 25px;
+  margin-right: 10px;
 `;

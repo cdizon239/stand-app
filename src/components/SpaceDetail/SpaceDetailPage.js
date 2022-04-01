@@ -23,7 +23,13 @@ export const SpaceDetailPage = () => {
 
   //  get space info on mount
   useEffect(() => {
-    getSpace(params.space_id, setSpace);
+    let fetchSpace = async () => {
+      let spaceFetched = await getSpace(params.space_id);
+      if (spaceFetched) {
+        setSpace(spaceFetched);
+      }
+    };
+    fetchSpace();
   }, []);
 
   useEffect(() => {

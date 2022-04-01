@@ -1,4 +1,4 @@
-export const getSpace = async (spaceId, setSpace) => {
+export const getSpace = async (spaceId) => {
     let spaceToFetch = await fetch(
       process.env.REACT_APP_BACKEND_URL + "/api/v1/spaces/" + spaceId,
       {
@@ -11,8 +11,8 @@ export const getSpace = async (spaceId, setSpace) => {
     );
     let jsonSpace = await spaceToFetch.json();
 
+
     if (jsonSpace) {
-      console.log(jsonSpace.data.members[0].user);
-      setSpace(jsonSpace.data);
+      return jsonSpace.data
     }
   };

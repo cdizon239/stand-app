@@ -25,7 +25,6 @@ export const SpacesList = ({ spaces }) => {
                   <Card.Body className="card-body">
                     <div className="card-details">
                       <Card.Title>#{space.name}</Card.Title>
-                      <Card.Text>{space.privacy} space</Card.Text>
                     </div>
                     <Button variant="secondary" className="card-button">Enter</Button>
                   </Card.Body>

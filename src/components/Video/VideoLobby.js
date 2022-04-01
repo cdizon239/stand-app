@@ -28,7 +28,7 @@ export const VideoLobby = ({
   return (
     <div style={{ height: "100vh", display: "flex", justifyContent: "space-between", margin: "0 50px" }}>
       <div>
-        List of active rooms
+        {rooms?.length > 0 ? 'List of active rooms' : 'No current active rooms, create and enter a new room'}
         <ListGroup>
         {
           rooms?.map((room, idx) => {
@@ -52,7 +52,7 @@ export const VideoLobby = ({
             <p>Name</p>
             <input
               type="text"
-              id="name"
+              id="username"
               value={username}
               onChange={handleUsernameChange}
               required

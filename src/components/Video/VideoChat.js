@@ -38,7 +38,7 @@ export const VideoChat = () => {
           },
           credentials: "include",
           body: JSON.stringify({
-            identity: username,
+            username: username,
             room_name: roomName,
           }),
         }

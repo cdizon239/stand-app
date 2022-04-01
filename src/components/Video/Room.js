@@ -35,10 +35,10 @@ export const Room = ({
     };
   }, [room]);
 
-  const remoteParticipants = participants.map((participant) => (
+  const remoteParticipants = participants.map((participant, idx) => (
     <Col>
       <Participant
-        key={participant.sid}
+        key={idx}
         participant={participant}
         isLocal={false}
       />

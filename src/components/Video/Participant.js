@@ -77,7 +77,7 @@ export const Participant = ({
   return (
     <>
       <div className="participant">
-        <h3>{participant.username}</h3>
+        <h3>{participant.identity}</h3>
         <video ref={videoRef} autoPlay={true} />
         <audio ref={audioRef} autoPlay={true} />
       </div>

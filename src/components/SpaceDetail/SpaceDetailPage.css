@@ -1,5 +1,22 @@
 .button-group {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     min-width: 50vw;
+}
+
+.list-item {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    color: #212529;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    /* justify-content: flex-start!important; */
+}
+
+.member-name {
+    margin-bottom: 0px;
 }

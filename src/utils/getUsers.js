@@ -11,5 +11,5 @@ export const getUsers= async () => {
     );
     let jsonAllUsers = await allUsers.json();
 
-    return jsonAllUsers
+    return jsonAllUsers.data
   };

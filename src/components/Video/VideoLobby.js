@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { getRooms } from "../../utils/getRooms";
+import { ListGroup } from "react-bootstrap";
 
 export const VideoLobby = ({
   username,
@@ -8,10 +10,33 @@ export const VideoLobby = ({
   handleRoomNameChange,
   handleSubmit,
 }) => {
+
+  const [rooms, setRooms] = useState()
+
+  //  grab all active video rooms
+  useEffect(() => {
+    let fetchRooms = async () => {
+      let allRooms = await getRooms();
+      if (allRooms) {
+        setRooms(allRooms)
+      }
+    };
+    fetchRooms();
+  }, [])
+
+
   return (
     <div style={{ height: "100vh", display: "flex", justifyContent: "space-between", margin: "0 50px" }}>
       <div>
         List of active rooms
+        <ListGroup>
+        {
+          rooms?.map((room, idx) => {
+            return <ListGroup.Item key={idx}>{room}</ListGroup.Item>
+          })
+        }
+        </ListGroup>
+
       </div>
       <StyledCard className="card-video">
         <form

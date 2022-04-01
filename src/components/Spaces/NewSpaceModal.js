@@ -100,7 +100,7 @@ export const NewSpaceModal = ({
                 }
               />
             </Form.Group>
-            <FormGroup className="mb-3" >
+            {/* <FormGroup className="mb-3" >
               <Form.Label>Space Privacy</Form.Label>
               <Select
                 options={privacyOptions}
@@ -110,7 +110,7 @@ export const NewSpaceModal = ({
                 }}
                 placeholder="Please select a space privacy setting"
               />
-            </FormGroup>
+            </FormGroup> */}
             <FormGroup className="mb-3" >
               <Form.Label>Space Members</Form.Label>
               <Select

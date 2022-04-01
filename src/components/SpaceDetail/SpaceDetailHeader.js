@@ -8,16 +8,20 @@ import {
 import { GearFill, PersonPlusFill } from "react-bootstrap-icons";
 import { NavLink } from "react-router-dom";
 
-const SpaceDetailHeader = ({ space }) => {
+const SpaceDetailHeader = ({ space, setTickets }) => {
   let members = space.members;
   let users = members.map((member) => ({
     email: member.user.email,
     key: member.user.email,
     name: member.user.name,
+    userId: member.user.userId,
     href: "#",
     src: member.user.img_url,
     onClick: () => {
       console.log(member.user.name);
+      // setTickets((prevState) => {
+      //   prevState.filter(ticket -> )
+      // })
     },
   }));
 

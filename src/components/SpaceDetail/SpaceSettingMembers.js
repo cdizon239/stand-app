@@ -15,6 +15,13 @@ const SpaceSettingMembers = () => {
   const [spaceMembers, setSpaceMembers] = useState();
   const [membersToAdd, setMembersToAdd] = useState();
 
+  let fetchSpaceMembers = async () => {
+    let membersFetched = await getSpaceMembers(params.space_id);
+    if (membersFetched) {
+      setSpaceMembers(membersFetched.data);
+    }
+  };
+
   const handleFormChange = (listOfEmails) => {
     setMembersToAdd(listOfEmails);
   };
@@ -41,17 +48,18 @@ const SpaceSettingMembers = () => {
     let membersAddJson = await addMembers.json();
 
     if (membersAddJson) {
-      window.location.reload(false);
+      fetchSpaceMembers()
     }
   };
 
   const handleRemoveMember = async (e, userId) => {
-    e.preventDefault()
+    e.preventDefault();
     let deleteMembers = await fetch(
       process.env.REACT_APP_BACKEND_URL +
         "/api/v1/spaces/" +
         params.space_id +
-        "/remove_member/" + userId,
+        "/remove_member/" +
+        userId,
       {
         method: "DELETE",
         headers: {
@@ -64,10 +72,9 @@ const SpaceSettingMembers = () => {
     let deleteMembersResponse = await deleteMembers.json();
 
     if (deleteMembersResponse) {
-      window.location.reload(false);
+      fetchSpaceMembers()
     }
-
-  }
+  };
 
   const usersDropdown = allUsers?.map((user) => {
     return {
@@ -85,7 +92,6 @@ const SpaceSettingMembers = () => {
     };
   });
 
-
   useEffect(() => {
     let fetchUsers = async () => {
       let usersFetched = await getUsers();
@@ -97,12 +103,6 @@ const SpaceSettingMembers = () => {
   }, []);
 
   useEffect(() => {
-    let fetchSpaceMembers = async () => {
-      let membersFetched = await getSpaceMembers(params.space_id);
-      if (membersFetched) {
-        setSpaceMembers(membersFetched.data);
-      }
-    };
     fetchSpaceMembers();
   }, []);
 
@@ -130,7 +130,7 @@ const SpaceSettingMembers = () => {
             {spaceMembers?.map((member) => {
               return (
                 <div className="list-item" key={member.id}>
-                  <div style={{display: 'flex'}}>
+                  <div style={{ display: "flex" }}>
                     <Avatar
                       src={member.img_url}
                       referrerPolicy="no-referrer"
@@ -138,7 +138,9 @@ const SpaceSettingMembers = () => {
                     />
                     <p className="member-name">{member.name}</p>
                   </div>
-                  <Button onClick={(e) => handleRemoveMember(e, member.id)}>Remove</Button>
+                  <Button onClick={(e) => handleRemoveMember(e, member.id)}>
+                    Remove
+                  </Button>
                 </div>
               );
             })}

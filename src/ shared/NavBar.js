@@ -35,7 +35,7 @@ export const NavBar = () => {
               <Nav.Link eventKey={2} href="#memes">
                 My Tickets
               </Nav.Link>
-              <Nav.Link>Rooms</Nav.Link>
+              <Nav.Link href="/videoRoom">Rooms</Nav.Link>
             </Nav>
           </Navbar.Collapse>
           <div onClick={handleLogout}>

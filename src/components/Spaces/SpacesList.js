@@ -24,7 +24,7 @@ export const SpacesList = ({ spaces }) => {
                   />
                   <Card.Body className="card-body">
                     <div className="card-details">
-                      <Card.Title>#{space.name}</Card.Title>
+                      <h6>#{space.name}</h6>
                     </div>
                     <Button variant="secondary" className="card-button">Enter</Button>
                   </Card.Body>

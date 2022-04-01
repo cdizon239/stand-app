@@ -2,12 +2,39 @@ import React from "react";
 import { Dropdown } from "react-bootstrap";
 import { deleteTicket } from "../../../utils/deleteTicket";
 import { NavLink } from "react-router-dom";
+import { getTickets } from "../../../utils/getTickets";
 
-const TicketDropdown = ({ ticketId, getTickets, setTickets, spaceId }) => {
+const TicketDropdown = ({ ticketId, setTickets, spaceId }) => {
   const deleteTicketHandler = async () => {
     await deleteTicket(ticketId);
-    await getTickets(spaceId, setTickets)
+    let ticketsFetched = await getTickets(spaceId)
+    if (ticketsFetched) {
+      setTickets(ticketsFetched)
+    }
   };
+
+  const handleTicketArchive = async () => {
+    let archiveTicket = await fetch(
+      process.env.REACT_APP_BACKEND_URL +
+        "/api/v1/tickets/" +
+        ticketId+
+        "/edit",
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          is_archived: true
+        }),
+      }
+    );
+    let ticketsFetched = await getTickets(spaceId)
+    if (ticketsFetched) {
+      setTickets(ticketsFetched)
+    }
+  }
 
   return (
     <Dropdown>
@@ -21,6 +48,9 @@ const TicketDropdown = ({ ticketId, getTickets, setTickets, spaceId }) => {
       ></Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item href={`/ticket/${ticketId}`}>View</Dropdown.Item>
+        <Dropdown.Item onClick={() =>handleTicketArchive()}>
+          Archive
+        </Dropdown.Item>
         <Dropdown.Item onClick={() => deleteTicketHandler()}>
           Delete
         </Dropdown.Item>

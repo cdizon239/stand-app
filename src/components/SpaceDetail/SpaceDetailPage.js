@@ -33,7 +33,23 @@ export const SpaceDetailPage = () => {
   }, []);
 
   useEffect(() => {
-    getTickets(params.space_id, setTickets);
+    let fetchTickets = async () => {
+      let ticketsFetched = await getTickets(params.space_id);
+      if (ticketsFetched) {
+        setTickets(ticketsFetched);
+      }
+    };
+    fetchTickets(); 
+  }, []);
+
+  useEffect(() => {
+    let fetchTickets = async () => {
+      let ticketsFetched = await getTickets(params.space_id);
+      if (ticketsFetched) {
+        setTickets(ticketsFetched);
+      }
+    };
+    fetchTickets(); 
   }, [space]);
 
   return (
@@ -67,7 +83,7 @@ export const SpaceDetailPage = () => {
                     <SpaceBoard
                       tickets={tickets}
                       setShowNewTicketForm={setShowNewTicketForm}
-                      getTickets={getTickets}
+                      // getTickets={getTickets}
                       setTickets={setTickets}
                       spaceId={space.id}
                     />
@@ -85,7 +101,7 @@ export const SpaceDetailPage = () => {
               showNewTicketForm={showNewTicketForm}
               setShowNewTicketForm={setShowNewTicketForm}
               spaceMembers={space.members.map((member) => member.user)}
-              getTickets={getTickets}
+              // getTickets={getTickets}
               setTickets={setTickets}
               spaceId={space.id}
             />

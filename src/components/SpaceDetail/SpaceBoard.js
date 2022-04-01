@@ -98,7 +98,7 @@ const SpaceBoard = ({
                                       <div>
                                         <TicketDropdown
                                           ticketId={item.id}
-                                          getTickets={getTickets}
+                                          // getTickets={getTickets}
                                           setTickets={setTickets}
                                           spaceId={spaceId}
                                         />

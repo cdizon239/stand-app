@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, FormGroup, Image } from "react-bootstrap";
 import { createTicket } from "../../utils/createTicket";
+import { getTickets } from "../../utils/getTickets";
 import Select from "react-select";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +15,6 @@ export const NewTicketModal = ({
   showNewTicketForm,
   setShowNewTicketForm,
   spaceMembers,
-  getTickets,
   setTickets,
   spaceId,
 }) => {
@@ -33,8 +33,11 @@ export const NewTicketModal = ({
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     let createdTicket = await createTicket(spaceId, ticketInfo, setShowNewTicketForm);
-    await getTickets(spaceId, setTickets);
-    navigate(`/space/${spaceId}`)
+    let ticketsFetched = await getTickets(spaceId)
+    if (ticketsFetched) {
+      setTickets(ticketsFetched)
+      navigate(`/space/${spaceId}`)
+    }
   };
 
   const statusOptions = [

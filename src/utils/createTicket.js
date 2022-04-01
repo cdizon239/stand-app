@@ -18,7 +18,6 @@ export const createTicket = async (spaceId, ticketInfo, setShowNewTicketForm) =>
       );
     let createdTicket = await newTicket.json()
     if (createdTicket) {
-        // getTickets(setTickets, spaceId)
         setShowNewTicketForm(false)
     }
 

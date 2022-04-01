@@ -19,21 +19,23 @@ const SpaceSettingGeneral = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    let editSpaceName = await fetch(
-      process.env.REACT_APP_BACKEND_URL +
-        "/api/v1/spaces/" +
-        params.space_id,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          name: spaceName
-        }),
-      }
-    );
+    if (spaceName !== '') {
+      let editSpaceName = await fetch(
+        process.env.REACT_APP_BACKEND_URL +
+          "/api/v1/spaces/" +
+          params.space_id,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            name: spaceName
+          }),
+        }
+      );
+    }
   };
 
   useEffect(() => {

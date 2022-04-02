@@ -16,17 +16,25 @@ export const SpacesList = ({ spaces }) => {
                 key={`space_${space.id}`}
               >
                 <Card className="card-container">
-                  <Card.Img
+                  {/* <Card.Img
                     variant="top"
-                    src={`/images/${Math.floor(Math.random() * 8) + 1}.png`}
+                    src={`/images/${Math.floor(Math.random() * 12) + 1}.jpg`}
                     className="card-image"
                     bsPrefix="img"
-                  />
+                  /> */}
+                  <div style={{ maxHeight: "150px" }}>
+                    <img
+                      src={`/images/${Math.floor(Math.random() * 12) + 1}.jpg`}
+                      className="card-image"
+                    ></img>
+                  </div>
                   <Card.Body className="card-body">
                     <div className="card-details">
                       <h6>#{space.name}</h6>
                     </div>
-                    <Button variant="secondary" className="card-button">Enter</Button>
+                    <Button variant="secondary" className="card-button">
+                      Enter
+                    </Button>
                   </Card.Body>
                 </Card>
               </NavLink>

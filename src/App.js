@@ -11,9 +11,11 @@ import SpaceSettingMembers from "./components/SpaceDetail/SpaceSettingMembers";
 import SpaceSettingGeneral from "./components/SpaceDetail/SpaceSettingGeneral";
 
 function App() {
+  const loggedInUserEmail = localStorage.getItem('loggedInUserEmail')
   return (
     <AppLayout className='App'>
       <Routes>
+        <Route path="/" element={loggedInUserEmail ? <Spaces/> : <Login />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/all_spaces" element={<Spaces />}></Route>
         <Route path="/space/:space_id" element={<SpaceDetailPage/>}></Route>

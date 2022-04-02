@@ -36,7 +36,9 @@ const Login = () => {
 
   //  clear local storage on mount
   useEffect(() => {
-    localStorage.clear()
+    if (localStorage.getItem('loggedInUserEmail')) {
+      navigate("/all_spaces");
+    }
   }, [])
 
   return (

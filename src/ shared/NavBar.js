@@ -15,7 +15,8 @@ export const NavBar = () => {
       },
       credentials: "include",
     });
-
+    
+    localStorage.clear()
     navigate("/login");
   };
 

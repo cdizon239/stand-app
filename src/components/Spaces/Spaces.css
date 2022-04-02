@@ -13,12 +13,6 @@
     margin: 0 2em;
 }
 
-.card-button {
-    height: 40px;
-    background-color: #979aaa!important;
-    border-color: none!important;
-}
-
 .card-container:hover {
     transform: scale(1.025);
 }

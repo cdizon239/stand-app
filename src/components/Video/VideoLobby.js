@@ -26,9 +26,9 @@ export const VideoLobby = ({
 
 
   return (
-    <div style={{ height: "100vh", display: "flex", justifyContent: "space-between", margin: "0 50px" }}>
-      <div>
-        {rooms?.length > 0 ? 'List of active rooms' : 'No current active rooms, create and enter a new room'}
+    <div style={{display: "flex", justifyContent: "space-between", alignItems: 'center', margin: "0 50px" }}>
+      <div style={{display: 'flex', flexDirection:'column', justifyContent: 'center', width: '100%', alignItems: 'center'}}>
+        {rooms?.length > 0 ? <h2>List of active rooms</h2> : <h2>No current active rooms <br/> Create and enter a new room</h2>}
         <ListGroup>
         {
           rooms?.map((room, idx) => {
@@ -83,6 +83,7 @@ const StyledButton = styled.button`
   color: white;
   font-weight: 500;
   padding: 0 20px;
+  margin-top: 20px;
 `;
 
 const StyledCard = styled.div`

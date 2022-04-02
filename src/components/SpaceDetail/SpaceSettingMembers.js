@@ -138,7 +138,7 @@ const SpaceSettingMembers = () => {
                     />
                     <p className="member-name">{member.name}</p>
                   </div>
-                  <Button onClick={(e) => handleRemoveMember(e, member.id)}>
+                  <Button className='card-button' variant="secondary" onClick={(e) => handleRemoveMember(e, member.id)}>
                     Remove
                   </Button>
                 </div>

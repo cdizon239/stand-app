@@ -8,6 +8,14 @@
   min-height: 100vw;
 }
 
+h1, h2, h3, h4, h5, h6, a {
+  color: #44515D!important;
+}
+
+a {
+  text-decoration: none!important;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -37,6 +45,13 @@
 .navigation {
   box-shadow: none;
 }
+
+.card-button {
+  height: 40px;
+  background-color: #6983b8!important;
+  border-color: none!important;
+}
+
 
 @keyframes App-logo-spin {
   from {

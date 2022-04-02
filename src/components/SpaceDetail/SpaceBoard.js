@@ -90,7 +90,7 @@ const SpaceBoard = ({
                                       style={{
                                         backgroundColor: snapshot.isDragging
                                           ? "#26384a"
-                                          : "#979aaa",
+                                          : "#646C95",
                                         ...provided.draggableProps.style,
                                       }}
                                     >

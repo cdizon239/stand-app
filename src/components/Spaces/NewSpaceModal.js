@@ -24,7 +24,7 @@ export const NewSpaceModal = ({
 
   const requiredFieldsCheck = () => {
     let newErrors = {};
-    if (spaceInfo["name"] || spaceInfo["name"] === "")
+    if (!spaceInfo["name"] || spaceInfo["name"] === "")
       newErrors["name"] = "Space name cannot be empty.";
     return newErrors;
   };

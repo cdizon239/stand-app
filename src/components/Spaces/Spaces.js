@@ -44,6 +44,7 @@ export const Spaces = () => {
         <SpacesPageWrapper>
           <AllSpacesHeaderWrapper>
             <h1>Spaces</h1>
+            <h6> Spaces are created to keep track of your team's or your projects progress </h6>
           </AllSpacesHeaderWrapper>
           <div className="spaces-list-wrapper">
             {spaces && <SpacesList spaces={spaces} />}
@@ -89,4 +90,5 @@ const buttonWrapper = styled.div`
 
 const AllSpacesHeaderWrapper = styled.div`
   padding: 15px 50px;
+  text-align: left;
 `;

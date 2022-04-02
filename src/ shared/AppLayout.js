@@ -7,7 +7,7 @@ const AppLayout = (props) => {
 
   return (
     <div className="App">
-      { location.pathname !== '/login' && <NavBar />}
+      { location.pathname !== '/login' && location.pathname !== '/' && <NavBar />}
       {props.children}
     </div>
   );

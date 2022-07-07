@@ -15,7 +15,7 @@
 
   <p align="center">
 StandApp an app for teams at work to help facilitate standups, and meetings. It will have a video conferencing feature, note taking space. Other stakeholders from other teams would have access to meetings held in a different space if they are "public" that allows them to add comments and ask questions after a meeting    <br />
-    <a href="https://muse-dev.herokuapp.com/"><strong>Explore the deployed app »</strong></a>
+    <a href="https://standapp-six.vercel.app/"><strong>Explore the deployed app »</strong></a>
     <br />
   </p>
 
